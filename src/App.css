@@ -1,38 +1,71 @@
-.App {
-  text-align: center;
+/* body {
+  --twitter-color: #50b7f5;
+  --twitter-background: #e6ecf0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.app {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  height: 100vh;
+  max-width: 1300px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 10px;
+} */
+
+
+#container {
+  width: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+}
+.unableNav{
+  display: none !important;
 }
 
-.App-link {
-  color: #61dafb;
-}
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@media (min-width: 200px) and (max-width: 499px) {
+  #container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
-  to {
-    transform: rotate(360deg);
+
+  #nav-box {
+    position: fixed !important;
+    bottom: 0;
+    width: 100%;
+    height: 3.6rem;
+    border-radius: 1rem 1rem 0 0;
+    /* background-color: #e22222;  */
+    /* Ajoutez les autres styles souhaités pour votre menu */
+  }
+}
+
+@media screen and (min-width: 500px) and (max-width: 1005px) {
+  #container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  #nav-box {
+    width: 80%;
+    padding-right: 1rem;
+    justify-content: right;
+  }
+}
+
+@media screen and (min-width: 1005px) and (max-width: 1281px){
+  #container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  #nav-box {
+    width: 10%;
+    margin-left: 1.2rem;
+    /* justify-content: center; */
   }
 }
