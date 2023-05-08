@@ -1,4 +1,5 @@
 import React from 'react'
+import Welcome from '../../features/auth/Welcome'
 
 const Accueil = () => {
   return (
@@ -6,6 +7,7 @@ const Accueil = () => {
         <h1>
       Accueil
         </h1>
+        <Welcome/>
     </div>
   )
 }

@@ -12,8 +12,8 @@ import Logo from '../../components/navBar/Logo';
 function Login() {
     const userRef = useRef()
     const errRef = useRef()
-    const [user, setUser] = useState('')
-    const [pwd, setPwd] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPwd] = useState('')
     const [errMsg, setErrMsg] = useState('')
     const navigate = useNavigate()
 
@@ -27,15 +27,16 @@ function Login() {
 
     useEffect(() => {
         setErrMsg('')
-    }, [user, pwd])
+    }, [email, password])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
         try {
-            const userData = await login({ user, pwd }).unwrap()
-            dispatch(setCredentials({ ...userData, user }))
-            setUser('')
+            const userData = await login({ email, password }).unwrap()
+            console.log(userData);
+            dispatch(setCredentials({ ...userData, email }))
+            setEmail('')
             setPwd('')
             navigate('/accueil')
         } catch (err) {
@@ -53,7 +54,7 @@ function Login() {
         }
     }
 
-    const handleUserInput = (e) => setUser(e.target.value)
+    const handleUserInput = (e) => setEmail(e.target.value)
     const handlePwdInput = (e) => setPwd(e.target.value)
 
     const [isSignUpMode, setIsSignUpMode] = useState(false);
@@ -112,7 +113,7 @@ function Login() {
                                         className="input-field"
                                         autoComplete="off"
                                         required
-                                        value={user}
+                                        value={email}
                                         ref={userRef}
                                         onChange={(e)=>{handleUserInput(e);handleInputChange(e)}}
                                     />
@@ -126,7 +127,7 @@ function Login() {
                                         className="input-field"
                                         autoComplete="off"
                                         required
-                                        value={pwd}
+                                        value={password}
                                         onChange={(e)=>{handlePwdInput(e);handleInputChange(e)}}
                                     />
                                     <label>Mot de passe</label>

@@ -14,6 +14,8 @@ import { RiFileList2Line, RiContactsFill } from "react-icons/ri";
 import { CgMoreO, CgMoreAlt } from "react-icons/cg";
 import { NavLink, useLocation } from 'react-router-dom';
 import Logo from "./Logo";
+import User from "./User";
+import Logo2 from "./Logo2";
 
 const NavBar = () => {
   const location = useLocation();
@@ -22,29 +24,32 @@ const NavBar = () => {
   }
   return (
     <div id="container-nav">
-      <div id="nav-up">
+        <div className="logo_nav">
         <Logo/>
-        <NavLink  to="/accueil" activeClassName="active" id="row">
+        </div>
+      <div id="nav-up">
+        <Logo2/>
+        <NavLink  to="/accueil" activeclassname="active" id="row">
           <BiHomeCircle id="home-icon" />
           <p id="nav-title" className="bold">Accueil</p>
         </NavLink>
 
-        <NavLink to="/calendrier" activeClassName="active" id="row">
+        <NavLink to="/calendrier" activeclassname="active" id="row">
           <FaCalendarAlt id="home-icon" className="home-icon1" />
           <p id="nav-title" className="bold">Calendrier</p>
         </NavLink>
 
-        <NavLink  to="/stagiaires" activeClassName="active" id="row">
+        <NavLink  to="/stagiaires" activeclassname="active" id="row">
           <IoIosPeople id="home-icon" />
           <p id="nav-title" className="bold">Stagiaires</p>
         </NavLink>
 
-        <NavLink to="/documents" activeClassName="active" id="row">
+        <NavLink to="/documents" activeclassname="active" id="row">
           <HiDocumentDuplicate id="home-icon" />
           <p id="nav-title" className="bold">Documents</p>
         </NavLink>
 
-        <NavLink to="/profile" activeClassName="active" id="row">
+        <NavLink to="/profile" activeclassname="active" id="row">
           <CgProfile id="home-icon" />
           <p className="bold" id="nav-title">
             Profile
@@ -52,24 +57,7 @@ const NavBar = () => {
         </NavLink>
 
       </div>
-
-      <div id="bottom-nav">
-        <span id="user-box">
-          <img
-            id="person"
-            src="https://avatars.githubusercontent.com/u/79016171?s=400&u=9376daf7bc67c804b89790ffc455fb5981c6d369&v=4"
-            alt="profile"
-          />
-          <span>
-            <p id="name">Issam Harnoufi</p>
-            <p id="id">DEVOWFS202</p>
-          </span>
-        </span>
-
-        <span>
-          <CgMoreAlt id="more-bottom" />
-        </span>
-      </div>
+      <User/>
     </div>
   );
 };
@@ -89,39 +77,39 @@ export default NavBar;
 //         </span>
 //         <ul id="nav-list">
 //           <li>
-//             <NavLink exact to="/" activeClassName="active">
+//             <NavLink exact to="/" activeclassname="active">
 //               <p id="nav-title">Accueil</p>
 //             </NavLink>
 //           </li>
 //           <li>
-//             <NavLink to="/calendrier" activeClassName="active">
+//             <NavLink to="/calendrier" activeclassname="active">
 //               <p id="nav-title">Calendrier</p>
 //             </NavLink>
 //           </li>
 //           <li>
-//             <NavLink to="/stagiaires" activeClassName="active">
+//             <NavLink to="/stagiaires" activeclassname="active">
 //               <p id="nav-title">Stagiaires</p>
 //             </NavLink>
 //           </li>
 //           <li>
-//             <NavLink to="/documents" activeClassName="active">
+//             <NavLink to="/documents" activeclassname="active">
 //               <p id="nav-title">Documents</p>
 //             </NavLink>
 //           </li>
 //           <li>
-//             <NavLink to="/profile" activeClassName="active">
+//             <NavLink to="/profile" activeclassname="active">
 //               <p id="nav-title">Profil</p>
 //             </NavLink>
 //           </li>
 //         </ul>
 //         <ul id="nav-list">
 //           <li>
-//             <NavLink to="/lists" activeClassName="active">
+//             <NavLink to="/lists" activeclassname="active">
 //               <p id="nav-title">Listes</p>
 //             </NavLink>
 //           </li>
 //           <li>
-//             <NavLink to="/profile" activeClassName="active">
+//             <NavLink to="/profile" activeclassname="active">
 //               <p className="bold" id="nav-title">
 //                 Profil
 //               </p>

@@ -44,6 +44,10 @@ body {
   padding: 0;
 }
 
+.first-letter{
+  text-transform: capitalize;
+}
+
 @media (min-width: 200px) and (max-width: 499px) {
   body {
     margin: 0;

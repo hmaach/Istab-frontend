@@ -64,7 +64,7 @@ const SocialAccounts = () => {
           </div>
         ))}
       </div>
-      <form onSubmit={handleAddAccount}>
+      {/* <form onSubmit={handleAddAccount}>
         <input
           type="text"
           name="platform"
@@ -80,7 +80,7 @@ const SocialAccounts = () => {
           onChange={handleInputChange}
         />
         <button type="submit">Add Account</button>
-      </form>
+      </form> */}
     </div>
   );
 };

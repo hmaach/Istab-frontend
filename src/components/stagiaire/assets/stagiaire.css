@@ -208,7 +208,7 @@ footer a:not(.nav-link) {
 @media screen and (min-width: 500px) and (max-width: 1005px) {
   #cv{
     /* border: rgb(38, 0, 255) solid 1px; */
-    max-width: 100%;
+    max-width: 89%;
     float: right;
     margin-right: 0;
   }
@@ -217,7 +217,7 @@ footer a:not(.nav-link) {
 @media screen and (min-width: 1005px) and (max-width: 1281px){
   #cv{
     /* border: rgb(255, 0, 242) solid 1px; */
-    max-width: 90%;
+    max-width: 89%;
     /* float: right; */
     margin-right: 0;
   }
