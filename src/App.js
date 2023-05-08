@@ -17,7 +17,7 @@ import RequireAuth from './features/auth/RequireAuth';
 const App = () => {
   return (
     <div id="container">
-      {/* <HeaderWrapper/> */}
+      <HeaderWrapper/>
       <NavBarWrapper />
       <Routes>
 

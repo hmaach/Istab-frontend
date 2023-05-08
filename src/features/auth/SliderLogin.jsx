@@ -42,9 +42,9 @@ const SliderLogin = () => {
       <div className="text-slider">
         <div className="text-wrap">
           <div className="text-group">
-            <h2>Create your own courses</h2>
-            <h2>Customize as you like</h2>
-            <h2>Invite students</h2>
+            <h2>La communication est primordiale</h2>
+            <h2>Des opportunités éducatives</h2>
+            <h2>Des événements importants</h2>
           </div>
         </div>
 

@@ -95,7 +95,7 @@ function Login() {
             <div className="box">
                 <div className="inner-box">
                     <div className="forms-wrap">
-                        <form onSubmit={handleSubmit} autoComplete="off" className={`sign-in-form ${isSignUpMode ? 'hide' : 'show'}`}>
+                        <form onSubmit={handleSubmit} autoComplete="off" className="login_form">
                             <div className="logo">
                                 <Logo />
                             </div>

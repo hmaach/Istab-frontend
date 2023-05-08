@@ -5,13 +5,13 @@ import './header.css'
 const Header = () => {
     return (
         <div className='container'>
-            <button className='login-button'>Connexion</button>
             <div className="rechercher">
-                <form method='get' id="search-box">
+                <form method='GET' id="search-box">
                     <input className='search-input' placeholder=" Rechercher..." id="serch-input" type="text" />
-                    <button type='submit'><RiSearchLine id="search-icon" /></button>
+                    <button type='submit'><RiSearchLine id="search-icon1" /></button>
                 </form>
             </div>
+            <button className='login-button'>Connexion</button>
         </div>
     )
 }

@@ -17,6 +17,10 @@ input {
     font-family: "Poppins", sans-serif;
 }
 
+/* .text-group h2{
+    font-size: 1rem;
+} */
+
 main {
     width: 100%;
     min-height: 100vh;
@@ -59,7 +63,7 @@ main {
     transition: 0.8s ease-in-out;
 }
 
-form {
+.login_form {
     max-width: 260px;
     width: 100%;
     margin: 0 auto;
@@ -70,11 +74,6 @@ form {
     grid-column: 1 / 2;
     grid-row: 1 / 2;
     transition: opacity 0.02s 0.4s;
-}
-
-form.sign-up-form {
-    opacity: 0;
-    pointer-events: none;
 }
 
 .logo {
@@ -140,8 +139,9 @@ form.sign-up-form {
     outline: none;
     border-bottom: 1px solid #bbb;
     padding: 0;
-    font-size: 0.95rem;
-    color: #151111;
+    font-size: 1.1rem;
+    color: var(--color-text) !important;
+    font-weight: 600;
     transition: 0.4s;
 }
 
