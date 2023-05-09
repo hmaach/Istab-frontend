@@ -6,7 +6,7 @@
 
 .container {
   display: flex;
-  width: 96%;
+  width: 96% !important;
   justify-content: space-around;
   align-items: center;
   position: fixed;
@@ -17,7 +17,7 @@
   padding: 0 20px;
   background-color:white;
   z-index: 3;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 }
 
 
@@ -63,10 +63,13 @@
   border: none;
   border-radius: 20px;
   cursor: pointer;
+  text-decoration: none;
+  transition: var(--transition);
 }
 
 .login-button:hover {
-  background-color: #0069d9;
+  background-color: #0370e6;
+  color: #fff;
 }
 
 

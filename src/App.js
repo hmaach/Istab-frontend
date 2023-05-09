@@ -1,8 +1,8 @@
 import Stagiaire from './components/stagiaire/Stagiaire';
 import React from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
-import Main from "./components/main/main";
+import Main from "./components/accueil/main/main";
 import NavBar from "./components/navBar/navbar";
 import Right from "./components/right/right";
 import Header from './components/header/Header';
@@ -17,30 +17,24 @@ import RequireAuth from './features/auth/RequireAuth';
 const App = () => {
   return (
     <div id="container">
-      <HeaderWrapper/>
+      <HeaderWrapper />
       <NavBarWrapper />
       <Routes>
-
         <Route path='/' element={<Layout />}>
           {/* public routes */}
           <Route index path='/accueil' element={<Accueil />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/' element={<Accueil />} />
+          <Route path='/stagiaires' element={<Stagiaires />} />
+          <Route path='/documents' element={<Documents />} />
+          <Route path='/profile' element={<Stagiaire />} />
+          <Route path='/s' element={[<Main />, <Right />]} />
 
           {/* protected routes */}
           <Route element={<RequireAuth />}>
             <Route path='/calendrier' element={<Calendrier />} />
           </Route>
-
-
         </Route>
-
-        <Route path='/s' element={[<Main />, <Right />]} />
-        <Route path='/' element={<Accueil />} />
-        <Route path='/accueil' element={<Accueil />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/stagiaires' element={<Stagiaires />} />
-        <Route path='/documents' element={<Documents />} />
-        <Route path='/profile' element={<Stagiaire />} />
       </Routes>
     </div>
   );

@@ -1,10 +1,9 @@
 #container-main {
-  width: 50%;
+  margin-top: 6rem;
+margin-left: 1.5rem;
+  width: 60%;
   height: fit-content;
-  border: 1px solid gainsboro;
-  border-bottom: none;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+
 }
 #box-top {
   width: 100%;
@@ -40,14 +39,12 @@
   margin-left: 20px;
 }
 #name-header {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+
   font-weight: bold;
   font-size: 18px;
 }
 #tweets-number {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+
   color: rgb(110, 110, 110);
   font-size: 13px;
 }
@@ -88,8 +85,7 @@
   border: 0.8px solid #1d9bf0;
   border-radius: 50px;
   font-weight: bold;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+
   color: #444;
   margin-right: 15px;
   font-size: 15px;
@@ -104,8 +100,7 @@
   border: 0.8px solid rgb(221, 221, 221);
   border-radius: 50px;
   font-weight: bold;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+
   color: #fff;
   margin-right: 15px;
   font-size: 15px;
@@ -126,16 +121,11 @@
   padding-top: 15px;
 }
 #name-header {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   color: rgb(32, 32, 32);
   font-weight: bold;
   font-size: 21px;
 }
-#id-user {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-}
+
 #job-box {
   display: flex;
   justify-content: flex-start;
@@ -157,8 +147,6 @@
   margin-right: 10px;
 }
 #job {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   margin-top: 12px;
   margin-bottom: 12px;
   color: rgb(58, 58, 58);
@@ -176,8 +164,6 @@
   color: rgb(99, 99, 99);
 }
 #date {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   color: rgb(99, 99, 99);
   padding-left: 2px;
 }
@@ -190,8 +176,7 @@
   margin-top: 11px;
 }
 #follow-text {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+
   color: rgb(99, 99, 99);
   margin-left: 3px;
   text-decoration: none;
@@ -200,8 +185,7 @@
   text-decoration: underline;
 }
 #number-follow {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+
   font-weight: bold;
   color: rgb(61, 61, 61);
 }
@@ -230,8 +214,7 @@
   cursor: pointer;
 }
 #nav {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+
   color: rgb(53, 53, 53);
 }
 .box-Tweets {
@@ -257,7 +240,11 @@
 }
 #tweet-box {
   min-height: 40px;
-  border-bottom: 0.3px solid #e2e2e2c4;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  overflow: hidden;
+  border: 0.3px solid #e2e2e2c4;
+  box-shadow:#e2e2e2c4 3px 2px 4px ;
   display: flex;
   padding: 5px;
 }
@@ -279,8 +266,7 @@
   align-items: center;
 }
 #tweet-name {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+
   font-weight: bold;
 }
 #box-tweet {
@@ -288,14 +274,12 @@
   padding-left: 10px;
 }
 #tweet-id {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+
   color: rgb(104, 104, 104);
   margin-left: 5px;
 }
 #tweet-date {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+
   color: rgb(104, 104, 104);
   margin-left: 5px;
 }
@@ -377,7 +361,6 @@
 }
 #text-tweet {
   width: 100%;
-  text-align: right;
   margin-right: 3px;
 }
 #red-heart {

@@ -1,6 +1,7 @@
 import React from 'react'
 import {RiSearchLine} from "react-icons/ri";
 import './header.css'
+import { Link } from 'react-router-dom';
 
 const Header = () => {
     return (
@@ -11,7 +12,7 @@ const Header = () => {
                     <button type='submit'><RiSearchLine id="search-icon1" /></button>
                 </form>
             </div>
-            <button className='login-button'>Connexion</button>
+            <Link className='login-button' to='/login'>Connexion</Link>
         </div>
     )
 }

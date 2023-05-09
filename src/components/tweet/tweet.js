@@ -45,15 +45,6 @@ const Tweet = (props) => {
         </div>
 
         <div id="nav-bottom-post">
-          <div id="box-comment-number">
-            <span className="comment" id="nav-icon-box">
-              <FaRegComment />
-            </span>
-              <p id="comment-tweet"> {props.comment} </p>
-          </div>
-          <span className="retweet" id="nav-icon-box">
-            <AiOutlineRetweet />
-          </span>
           <div id="box-like-number">
             <span onClick={likeHandler} className="like" id="nav-icon-box">
               {like === true ? (
@@ -66,12 +57,6 @@ const Tweet = (props) => {
               {like === true  ? parseInt(props.likeNumber) + 1 : props.likeNumber}
             </spna>
           </div>
-          <span className="share" id="nav-icon-box">
-            <FiShare />
-          </span>
-          <span className="analytic" id="nav-icon-box">
-            <SiGoogleanalytics />
-          </span>
         </div>
       </div>
     </div>
