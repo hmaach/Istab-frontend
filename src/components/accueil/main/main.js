@@ -4,42 +4,35 @@ import Tweet from "../../tweet/tweet";
 
 const Main = () => {
   const [follow, setFollow] = useState(true);
+  const [tweets, setTweets] = useState([
+    { id: 1, tweet: "Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une. On utilise un texte en faux latin, le Lorem", likeNumber: "25", comment: "1" },
+    { id: 2, tweet: "Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une. On utilise un texte en faux latin, le Lorem ", likeNumber: "96", comment: "5" },
+    { id: 3, tweet: "Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une. On utilise un texte en faux latin, le Lorem", likeNumber: "60" },
+    { id: 4, tweet: "Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une. On utilise un texte en faux latin, le Lorem", likeNumber: "60" },
+    { id: 5, tweet: "Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une. On utilise un texte en faux latin, le Lorem", likeNumber: "60" },
+    { id: 6, tweet: "Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une. On utilise un texte en faux latin, le Lorem", likeNumber: "60" },
+  ]);
 
-  console.log(follow);
+  const handleDelete = (id) => {
+    const updatedTweets = tweets.filter((tweet) => tweet.id !== id);
+    setTweets(updatedTweets);
+  };
 
   const followHandler = () => {
-    if (follow === true) {
-      setFollow(false);
-    } else if (follow === false) {
-      setFollow(true);
-    }
+    setFollow((prevFollow) => !prevFollow);
   };
 
   return (
     <div id="container-main">
-      <Tweet
-        tweet="Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une. On utilise un texte en faux latin, le Lorem"
-        likeNumber="25"
-        comment="1"
-      />
-      <Tweet
-        tweet="Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une. On utilise un texte en faux latin, le Lorem "
-        likeNumber="96"
-        comment="5"
-      />
-      <Tweet
-        tweet="Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une. On utilise un texte en faux latin, le Lorem"
-        likeNumber="60"
-      />
-      <Tweet
-        tweet="Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une. On utilise un texte en faux latin, le Lorem"
-        likeNumber="60"
-      />
-      <Tweet tweet="Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une. On utilise un texte en faux latin, le Lorem" likeNumber="60" />
-      <Tweet
-        tweet="Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une. On utilise un texte en faux latin, le Lorem"
-        likeNumber="60"
-      />
+      {tweets.map((tweet) => (
+        <Tweet
+          key={tweet.id}
+          tweet={tweet.tweet}
+          likeNumber={tweet.likeNumber}
+          id={tweet.id}
+          onDelete={handleDelete} 
+        />
+      ))}
     </div>
   );
 };

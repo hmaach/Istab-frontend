@@ -1,12 +1,12 @@
 #navbar {
-  position: absolute;
-  width: 280px;
+  position: fixed;
+  width: 100%;
   height: 1050px;
-  left: 0px;
-  top: 0px;
-
+  top: 0;
+  left: 0;
   background: #FFFFFF;
 }
+
 
 #Logo_ofppt {
   position: absolute;
@@ -167,7 +167,7 @@ a {
   width: 255px;
   height: 69px;
   left: 10px;
-  bottom: 0px;
+  bottom: 120px;
 }
 
 #profile p:nth-of-type(1) {
@@ -235,13 +235,17 @@ a {
 }
 
 #Notification {
-  position: absolute;
+  position: fixed;
   width: 426px;
   height: 1050px;
   left: 1480px;
-  top: 0px;
-
+  top: 0;
   background: #E8EDF0;
+  overflow: hidden;
+}
+
+#Notification:hover {
+  overflow: auto;
 }
 
 #notif {

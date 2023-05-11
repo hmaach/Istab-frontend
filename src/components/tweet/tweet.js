@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-
+import React, { useState, useRef } from "react";
 import { CgMoreAlt } from "react-icons/cg";
 import { SiGoogleanalytics } from "react-icons/si";
 import { FiShare } from "react-icons/fi";
@@ -8,13 +7,28 @@ import { FaRegComment } from "react-icons/fa";
 
 const Tweet = (props) => {
   const [like, setLike] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
+  const menuBoxRef = useRef(null);
 
   const likeHandler = () => {
-    if (like === false) {
-      setLike(true);
-    } else if (like === true) {
-      setLike(false);
+    setLike(!like);
+  };
+
+  const showMenuHandler = () => {
+    setShowMenu((prevShowMenu) => !prevShowMenu);
+    const menuBox = menuBoxRef.current;
+    if (menuBox) {
+      menuBox.classList.toggle("style");
+      menuBox.style.visibility = "visible";
     }
+  };
+
+  const handleEdit = () => {
+    console.log("Edit button clicked");
+  };
+
+  const handleDelete = () => {
+    props.onDelete(props.id);
   };
 
   return (
@@ -35,27 +49,34 @@ const Tweet = (props) => {
             <p id="tweet-date">Aug 10</p>
           </span>
 
-          <span id="span-more">
-            <CgMoreAlt  />
-          </span>
+          <div class="containe">
+            <div class="group-menu">
+              <span id="span-more" className="menu-icon" onClick={showMenuHandler}>
+                <CgMoreAlt />
+              </span>
+            </div>
+
+            <div id="menu-box" ref={menuBoxRef}>
+              <div class="info">
+                <span onClick={handleEdit}>Edit</span>
+              </div>
+              <div class="info">
+                <span onClick={handleDelete}>Delete</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div id="post-box">
-          <p id="text-tweet"> {props.tweet} </p>
+          <p id="text-tweet">{props.tweet}</p>
         </div>
 
         <div id="nav-bottom-post">
           <div id="box-like-number">
             <span onClick={likeHandler} className="like" id="nav-icon-box">
-              {like === true ? (
-                <AiFillHeart id="red-heart" />
-              ) : (
-                <AiOutlineHeart />
-              )}
+              {like === true ? <AiFillHeart id="red-heart" /> : <AiOutlineHeart />}
             </span>
-            <spna id="like-number">
-              {like === true  ? parseInt(props.likeNumber) + 1 : props.likeNumber}
-            </spna>
+            <span id="like-number">{like === true ? parseInt(props.likeNumber) + 1 : props.likeNumber}</span>
           </div>
         </div>
       </div>

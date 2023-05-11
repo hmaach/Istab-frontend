@@ -15,7 +15,8 @@ function Accueil() {
 
       </head>
       <div id="navbar">
-        <img src="/assets/images/logo.png" id="Logo_ofppt" />
+        <a href="#" >
+        <img src="/assets/images/logo.png" id="Logo_ofppt" />  </a>
 
         <p id="ISTABerkane">ISTA Berkane</p> <hr />
 
