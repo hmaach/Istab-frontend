@@ -3,13 +3,15 @@ import { TbLogout } from 'react-icons/tb'
 import { useSelector } from 'react-redux'
 import { selectCurrentUser } from '../../features/auth/authSlice'
 import './navbar.css'
+import Logout from '../../features/logout/Logout'
 
 const User = () => {
-    const user = useSelector(selectCurrentUser)
-    // const prenom = user.prenom
-    // const nom = user.nom
-  return (
-    <div id="bottom-nav">
+  const user = useSelector(selectCurrentUser)
+  if (user) {
+    let nom = user.nom
+    let prenom = user.prenom
+    return (
+      <div id="bottom-nav">
         <span id="user-box">
           <img
             id="person"
@@ -18,15 +20,16 @@ const User = () => {
           />
           <span>
             {/* <p id="name"><span className='first-letter'>{prenom}</span> <span className='first-letter'>{nom}</span></p> */}
-            <p id="name"><span className='first-letter'>hamza</span> <span className='first-letter'>maach</span></p>
+            <p id="name"><span className='first-letter'>{prenom}</span> <span className='first-letter'>{nom}</span></p>
             <p id="id">DEVOWFS202</p>
           </span>
         </span>
-        <button className='logout'>
-          <TbLogout id="logout-bottom" />
-        </button>
+        <Logout />
       </div>
-  )
+    )
+  } else {
+    return null
+  }
 }
 
 export default User

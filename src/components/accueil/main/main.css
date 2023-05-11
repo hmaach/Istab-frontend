@@ -5,6 +5,13 @@ margin-left: 1.5rem;
   height: fit-content;
 
 }
+
+.role_poste{
+  color: var(--color-text-light);
+  float: left;
+  border: 1px red solid;
+  
+}
 #box-top {
   width: 100%;
   height: 53px;
@@ -256,12 +263,14 @@ margin-left: 1.5rem;
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  padding: 10px;
-  padding-left: 15px;
+  /* padding: 10px; */
+  /* padding-left: 15px; */
+  margin: 10px ;
 }
 #name-id {
   width: 100%;
   display: flex;
+  margin-top:  15px;
   justify-content: space-between;
   align-items: center;
 }

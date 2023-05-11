@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { setCredentials } from '../../features/auth/authSlice';
 import Logo from '../../components/navBar/Logo';
+const { localStorage } = window;
 
 function Login() {
     const userRef = useRef()
@@ -16,10 +17,10 @@ function Login() {
     const [password, setPwd] = useState('')
     const [errMsg, setErrMsg] = useState('')
     const navigate = useNavigate()
-
-
-    const [login, { isLoading }] = useLoginMutation()
     const dispatch = useDispatch()
+    const [login, { isLoading }] = useLoginMutation()
+
+
 
     useEffect(() => {
         userRef.current.focus()
@@ -34,8 +35,13 @@ function Login() {
 
         try {
             const userData = await login({ email, password }).unwrap()
-            console.log(userData);
-            dispatch(setCredentials({ ...userData, email }))
+            let token = localStorage.setItem('token', userData.token);
+            let user = localStorage.setItem('user', JSON.stringify(userData.user));
+            const userv = userData.user
+            const tokenv = userData.tokenv
+            if (userv && tokenv) {
+              dispatch(setCredentials({ userv, tokenv }));
+            }
             setEmail('')
             setPwd('')
             navigate('/accueil')
@@ -53,6 +59,8 @@ function Login() {
             errRef.current.focus();
         }
     }
+
+
 
     const handleUserInput = (e) => setEmail(e.target.value)
     const handlePwdInput = (e) => setPwd(e.target.value)
@@ -115,7 +123,7 @@ function Login() {
                                         required
                                         value={email}
                                         ref={userRef}
-                                        onChange={(e)=>{handleUserInput(e);handleInputChange(e)}}
+                                        onChange={(e) => { handleUserInput(e); handleInputChange(e) }}
                                     />
                                     <label>Email</label>
                                 </div>
@@ -128,7 +136,7 @@ function Login() {
                                         autoComplete="off"
                                         required
                                         value={password}
-                                        onChange={(e)=>{handlePwdInput(e);handleInputChange(e)}}
+                                        onChange={(e) => { handlePwdInput(e); handleInputChange(e) }}
                                     />
                                     <label>Mot de passe</label>
                                 </div>

@@ -2,9 +2,7 @@ import Stagiaire from './components/stagiaire/Stagiaire';
 import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
-import Main from "./components/accueil/main/main";
 import NavBar from "./components/navBar/navbar";
-import Right from "./components/right/right";
 import Header from './components/header/Header';
 import Accueil from './components/accueil/Accueil';
 import Calendrier from './components/calendrier/Calendrier';
@@ -13,8 +11,17 @@ import Stagiaires from './components/stagiaires/Stagiaires';
 import Login from './features/auth/Login';
 import Layout from './features/auth/Layout';
 import RequireAuth from './features/auth/RequireAuth';
+import { useDispatch } from 'react-redux';
+import { setCredentials } from './features/auth/authSlice';
+const { localStorage } = window;
 
 const App = () => {
+  const dispatch = useDispatch()
+  const token = localStorage.getItem('token');
+  const user = JSON.parse(localStorage.getItem('user'));
+  if (user && token) {
+    dispatch(setCredentials({ user, token }));
+  }
   return (
     <div id="container">
       <HeaderWrapper />
@@ -28,7 +35,7 @@ const App = () => {
           <Route path='/stagiaires' element={<Stagiaires />} />
           <Route path='/documents' element={<Documents />} />
           <Route path='/profile' element={<Stagiaire />} />
-          <Route path='/s' element={[<Main />, <Right />]} />
+          {/* <Route path='/s' element={[<Main />, <Right />]} /> */}
 
           {/* protected routes */}
           <Route element={<RequireAuth />}>

@@ -45,9 +45,10 @@ const Tweet = (props) => {
         <div id="name-id">
           <span id="flex-tweet">
             <p id="tweet-name">ali turkaman</p>
-            <p id="tweet-id">@ATurkaman . </p>
+            <p id="type_poste">Annonce</p>
             <p id="tweet-date">Aug 10</p>
           </span>
+            <p className="role_poste">Directeur</p>
 
           <div class="containe">
             <div class="group-menu">
