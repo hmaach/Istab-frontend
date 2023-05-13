@@ -2,19 +2,21 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const AccountMight = (props) => {
+  const stagiaire = props.stagiaire 
+
   return (
-    <Link to='/profile' id="box-account-might">
+    <Link to='/profile' id="box-account-might" key={stagiaire.id}>
       <div id="container-might">
         <span id="user-box">
           <img
             id="person"
-            src="https://avatars.githubusercontent.com/u/79016171?s=400&u=9376daf7bc67c804b89790ffc455fb5981c6d369&v=4"
+            src="ayadi.jpeg"
             alt="profile"
           />
           <span>
             {/* <p id="name"><span className='first-letter'>{prenom}</span> <span className='first-letter'>{nom}</span></p> */}
-            <p id="name"><span className='first-letter'>hamza</span> <span className='first-letter'>maach</span></p>
-            <p id="id">DEVOWFS202</p>
+            <p id="name"><span className='first-letter'>{stagiaire.prenom}</span> <span className='first-letter'>{stagiaire.nom}</span></p>
+            <p id="id" className='first-letter'>{stagiaire.filiere}</p>
           </span>
         </span>
       </div>

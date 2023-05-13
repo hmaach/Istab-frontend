@@ -1,5 +1,5 @@
 import Stagiaire from './components/stagiaire/Stagiaire';
-import React from "react";
+import React, { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/navBar/navbar";
@@ -13,11 +13,22 @@ import Layout from './features/auth/Layout';
 import RequireAuth from './features/auth/RequireAuth';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from './features/auth/authSlice';
+import RequireAdmin from './features/auth/RequireAdmin';
 const { localStorage } = window;
 
 const App = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const storedCredentials = localStorage.getItem('credentials');
+    if (storedCredentials) {
+      const credentials = JSON.parse(storedCredentials);
+      dispatch(setCredentials(credentials));
+    }
+  }, [dispatch]);
+
   const token = localStorage.getItem('token');
+  // console.log(token);
   const user = JSON.parse(localStorage.getItem('user'));
   if (user && token) {
     dispatch(setCredentials({ user, token }));
@@ -28,18 +39,22 @@ const App = () => {
       <NavBarWrapper />
       <Routes>
         <Route path='/' element={<Layout />}>
+
           {/* public routes */}
           <Route index path='/accueil' element={<Accueil />} />
           <Route path='/login' element={<Login />} />
           <Route path='/' element={<Accueil />} />
           <Route path='/stagiaires' element={<Stagiaires />} />
-          <Route path='/documents' element={<Documents />} />
           <Route path='/profile' element={<Stagiaire />} />
-          {/* <Route path='/s' element={[<Main />, <Right />]} /> */}
 
-          {/* protected routes */}
+          {/* protected routes (require login) */}
           <Route element={<RequireAuth />}>
             <Route path='/calendrier' element={<Calendrier />} />
+          </Route>
+
+          {/* admin routes */}
+          <Route element={<RequireAdmin />}>
+            <Route path='/documents' element={<Documents />} />
           </Route>
         </Route>
       </Routes>

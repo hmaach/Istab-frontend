@@ -85,6 +85,7 @@
 #might-like-box {
   width: 90%;
   height: auto;
+  transition: var(--transition);
   border-radius: 16px;
   background: rgb(255, 255, 255);
   box-shadow: #e2e2e2c4 0px 0px 4px;
@@ -94,11 +95,16 @@
 #title-might {
   font-size: 20px;
   text-align: left;
-  padding: 12px;
+  padding: 6px 12px 1px;
   flex-direction: column;
 }
 #container-might {
   display: flex;
+  /* border: red 1px solid; */
+  align-items: center;
+  height: 70%;
+  margin-top: 20px;
+  margin-left: 10px;
 }
 #box-account-might {
   text-decoration: none;
@@ -362,4 +368,22 @@
     margin-right: 8px;
     font-size: 11px;
   }
+}
+
+.type_notif{
+  /* border: red 1px solid; */
+  font-size: 0.7rem;
+  margin-left: 14px;
+}
+
+.notif{
+  border: transparent;
+  padding: 7px 0 !important;
+  font-size: 0.8rem;
+  border-top: #e2e2e2c4 solid 1px;
+}
+.lib_notif{
+  margin-bottom: 0 !important;
+  font-weight: 500 !important;
+  margin:7px 7px 14px 14px;
 }

@@ -7,7 +7,9 @@
 .unableNav{
   display: none !important;
 }
-
+.no-margin{
+  margin: 0 !important;
+}
 
 @media (min-width: 200px) and (max-width: 499px) {
   #container {
@@ -22,8 +24,7 @@
     width: 100%;
     height: 3.6rem;
     border-radius: 1rem 1rem 0 0;
-    /* background-color: #e22222;  */
-    /* Ajoutez les autres styles souhaités pour votre menu */
+
   }
 }
 

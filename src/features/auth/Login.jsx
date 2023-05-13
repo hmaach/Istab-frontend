@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { setCredentials } from '../../features/auth/authSlice';
 import Logo from '../../components/navBar/Logo';
+import SetCookie from '../../cookies/JWT/SetCookie';
 const { localStorage } = window;
 
 function Login() {
@@ -32,15 +33,25 @@ function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-
+        
         try {
             const userData = await login({ email, password }).unwrap()
-            let token = localStorage.setItem('token', userData.token);
-            let user = localStorage.setItem('user', JSON.stringify(userData.user));
-            const userv = userData.user
-            const tokenv = userData.tokenv
-            if (userv && tokenv) {
-              dispatch(setCredentials({ userv, tokenv }));
+            // const response = await fetch(`http://127.0.0.1:8000/api/login`,{
+            //     method:'POST',
+            //     headers:{'Content-Type':'application/json'},
+            //     credentials:'include',
+            //     body:JSON.stringify({
+            //         email,
+            //         password
+            //     })
+            // })
+            // const userData = await response.json();
+            // console.log(userData);
+            if (userData.user && userData.token) {
+              dispatch(setCredentials(userData));
+              SetCookie('jwt',userData.token)
+              localStorage.setItem('credentials', JSON.stringify(userData));
+              localStorage.setItem('token', JSON.stringify(userData.token));
             }
             setEmail('')
             setPwd('')
@@ -117,9 +128,9 @@ function Login() {
                                 <div className="input-wrap">
                                     <input
                                         type="email"
-                                        minLength="4"
+                                        // minLength="1"
                                         className="input-field"
-                                        autoComplete="off"
+                                        // autoComplete="off"
                                         required
                                         value={email}
                                         ref={userRef}
@@ -133,7 +144,7 @@ function Login() {
                                         type="password"
                                         minLength="4"
                                         className="input-field"
-                                        autoComplete="off"
+                                        // autoComplete="off"
                                         required
                                         value={password}
                                         onChange={(e) => { handlePwdInput(e); handleInputChange(e) }}

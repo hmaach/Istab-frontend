@@ -63,7 +63,7 @@
 }
 
 .berkane {
-  color: tomato !important;
+  color: var(--color-primary) !important;
   font-family: 'Handlee';
   font-weight: 500 !important;
 }
@@ -224,6 +224,7 @@
 
 #user-box {
   display: flex;
+
 }
 
 @media (min-width: 200px) and (max-width: 499px) {
