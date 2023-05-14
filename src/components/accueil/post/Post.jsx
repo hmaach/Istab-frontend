@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { CgMoreAlt } from "react-icons/cg";
+import { MdDelete } from "react-icons/md";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from "../../../features/auth/authSlice";
@@ -48,7 +49,6 @@ const Post = (props) => {
   const handleDelete = () => {
     props.onDelete(props.id);
   };
-
   return (
     <div id="tweet-box">
       <div id="profile-tweet">
@@ -71,21 +71,33 @@ const Post = (props) => {
               <p id="type_poste" className="first-letter">{post.type}</p>
             </div>
           </div>
-          <div className="containe">
-            <div className="group-menu">
-              <span id="span-more" className="menu-icon" onClick={showMenuHandler}>
-                <CgMoreAlt />
-              </span>
-            </div>
-            <div id="menu-box" ref={menuBoxRef}>
-              <div className="info">
-                <span onClick={handleEdit}>Edit</span>
+          {user &&
+          (user.id === post.user_id ?
+            <div className="containe">
+              <div className="group-menu">
+                <span id="span-more" className="menu-icon" onClick={showMenuHandler}>
+                  <CgMoreAlt />
+                </span>
               </div>
-              <div className="info">
-                <span onClick={handleDelete}>Delete</span>
+              <div id="menu-box" ref={menuBoxRef}>
+                <div className="info">
+                  <span onClick={handleEdit}>Edit</span>
+                </div>
+                <div className="info">
+                  <span onClick={handleDelete}>Delete</span>
+                </div>
               </div>
             </div>
-          </div>
+            : user.role === 'admin' ?
+              <div className="containe">
+                <div className="group-menu">
+                  <span id="span-more" className="menu-icon" onClick={showMenuHandler}>
+                    <MdDelete />
+                  </span>
+                </div>
+              </div>
+              : null
+          )}
         </div>
         <div id="post-box">
           <p id="text-tweet">{post.libelle}</p>

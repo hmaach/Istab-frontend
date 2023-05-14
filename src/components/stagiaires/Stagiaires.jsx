@@ -3,6 +3,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from '../../features/auth/authSlice';
 import GetCookie from '../../cookies/JWT/GetCookie';
+import { selectSearchData } from '../../features/search/searchSlice';
 
 const Stagiaires = () => {
 
@@ -41,6 +42,8 @@ const Stagiaires = () => {
   //   }, 1 * 60 * 1000);
   //   return () => clearInterval(interval);
   // }, [])
+
+  console.log(useSelector(selectSearchData));
   return (
     <div>
       <h1>

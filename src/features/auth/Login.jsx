@@ -36,17 +36,6 @@ function Login() {
         
         try {
             const userData = await login({ email, password }).unwrap()
-            // const response = await fetch(`http://127.0.0.1:8000/api/login`,{
-            //     method:'POST',
-            //     headers:{'Content-Type':'application/json'},
-            //     credentials:'include',
-            //     body:JSON.stringify({
-            //         email,
-            //         password
-            //     })
-            // })
-            // const userData = await response.json();
-            // console.log(userData);
             if (userData.user && userData.token) {
               dispatch(setCredentials(userData));
               SetCookie('jwt',userData.token)
@@ -128,9 +117,9 @@ function Login() {
                                 <div className="input-wrap">
                                     <input
                                         type="email"
-                                        // minLength="1"
+                                        minLength="1"
                                         className="input-field"
-                                        // autoComplete="off"
+                                        autoComplete="off"  
                                         required
                                         value={email}
                                         ref={userRef}
@@ -144,7 +133,7 @@ function Login() {
                                         type="password"
                                         minLength="4"
                                         className="input-field"
-                                        // autoComplete="off"
+                                        autoComplete="off"
                                         required
                                         value={password}
                                         onChange={(e) => { handlePwdInput(e); handleInputChange(e) }}

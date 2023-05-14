@@ -342,6 +342,16 @@
 @media screen and (min-width: 1005px) and (max-width: 1281px) {
   #name-might {
     font-size: 14px;
+    
+  }
+  #might-like-box{
+    /* border: red 1px solid; */
+    width: 80%;
+    
+  }
+  #container-right{
+    right: 0rem;
+    
   }
   #search-icon {
     font-size: 20px;
@@ -371,7 +381,7 @@
 }
 
 .type_notif{
-  /* border: red 1px solid; */
+ 
   font-size: 0.7rem;
   margin-left: 14px;
 }

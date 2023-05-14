@@ -44,6 +44,8 @@
 
 @media screen and (min-width: 1005px) and (max-width: 1281px){
   #container {
+    /* margin-left: 0% !important; */
+    /* border: red solid 1px; */
     width: 100%;
     display: flex;
     justify-content: center;
