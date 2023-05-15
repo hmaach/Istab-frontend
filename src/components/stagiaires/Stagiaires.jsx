@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import axios from "axios";
+import './stagiaires.css'
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from '../../features/auth/authSlice';
 import GetCookie from '../../cookies/JWT/GetCookie';
 import { selectSearchData } from '../../features/search/searchSlice';
+import { Link, NavLink } from 'react-router-dom';
 
 const Stagiaires = () => {
 
@@ -48,8 +50,16 @@ const Stagiaires = () => {
     <div>
       <h1>
 
-        Stagiaires
+        {/* <Link to="/stagaire" className='linkto'>
+          hhhhh
+        </Link> */}
       </h1>
+      {/* <NavLink to="/stagiaire" activeclassname="active" id="row">
+          <p id="nav-title" className="bold">Ayadi Oussama</p>
+        </NavLink> */}
+      <h1 className='hh1'><Link to="/stagiaire" className='linkto'>
+      Ayadi Oussama
+      </Link></h1>
     </div>
   )
 }

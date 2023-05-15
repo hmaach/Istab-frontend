@@ -4,6 +4,7 @@ import { RiSearchLine } from 'react-icons/ri'
 import { search } from '../../app/api/axios';
 import { useDispatch } from 'react-redux';
 import { setResult } from '../../features/search/searchSlice';
+import { useNavigate } from 'react-router';
 
 const Search = () => {
 
@@ -11,7 +12,7 @@ const Search = () => {
     const [data, setData] = useState({});
     const dispatch = useDispatch()
     const [err, setErr] = useState();
-
+    const navigate = useNavigate();
 
     const handleInputChange = (e) => {
         setQuery(e.target.value);
@@ -22,24 +23,22 @@ const Search = () => {
         search(query)
             .then((data) => {
                 setData(data)
+                navigate('/recherche');
             })
             .catch((error) => {
                 setErr(error);
             });
-        }
-        
-        useEffect(() => {
-            if (data) {
+    }
+
+    useEffect(() => {
+        if (data) {
             dispatch(setResult({ searchData: data }));
-            // console.log(data);
         }
     }, [data])
 
-
-
     return (
         <div className="rechercher">
-            <form id="search-box">
+            <form onSubmit={handleSearch} id="search-box">
                 <input
                     className='search-input'
                     placeholder=" Rechercher..."
@@ -53,7 +52,6 @@ const Search = () => {
                 >
                     <RiSearchLine
                         id="search-icon1"
-                        onClick={handleSearch}
                     />
                 </button>
             </form>

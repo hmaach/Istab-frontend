@@ -68,7 +68,7 @@ const Right = () => {
             )
           }
           <div to='/stagiaires' id="show-more-box">
-            <Link id="show-more-btn">Show more</Link>
+            <Link id="show-more-btn">Voir plus...</Link>
           </div>
         </div>
       }
@@ -90,7 +90,7 @@ const Right = () => {
             )
           }
           <div to='/stagiaires' id="show-more-box">
-            <Link id="show-more-btn">Show more</Link>
+            <Link id="show-more-btn">Voir plus...</Link>
           </div>
         </div>
       }

@@ -10,14 +10,14 @@ const User = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-      const storedUser = JSON.parse(localStorage.getItem('user'))
-      if (storedUser) {
-        dispatch(setCredentials({
-          user: storedUser,
-          token: localStorage.getItem('token')
-        }))
-      }
-    }, [dispatch])
+    const storedUser = JSON.parse(localStorage.getItem('user'))
+    if (storedUser) {
+      dispatch(setCredentials({
+        user: storedUser,
+        token: localStorage.getItem('token')
+      }))
+    }
+  }, [dispatch])
 
   if (user) {
     let nom = user.nom
@@ -30,10 +30,18 @@ const User = () => {
             src="ayadi.jpeg"
             alt="profile"
           />
-          <span>
-            <p id="name"><span className='first-letter'>{prenom}</span> <span className='first-letter'>{nom}</span></p>
-            <p id="id">DEVOWFS202</p>
-          </span>
+          {user.role === 'stagiaire' ?
+            <span>
+              <p id="name"><span className='first-letter'>{prenom}</span> <span className='first-letter'>{nom}</span></p>
+              <p id="id">DEVOWFS202</p>
+            </span>
+            :
+            <span>
+              <p id="name"><span className='first-letter'>{prenom}</span> <span className='first-letter'>{nom}</span></p>
+              <p id="id" className='first-letter'>{user.role}</p>
+            </span>
+          }
+
         </span>
         <Logout />
       </div>

@@ -14,6 +14,7 @@ import RequireAuth from './features/auth/RequireAuth';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from './features/auth/authSlice';
 import RequireAdmin from './features/auth/RequireAdmin';
+import SearchAccueil from './components/accueil/SearchAccueil';
 const { localStorage } = window;
 
 const App = () => {
@@ -42,10 +43,12 @@ const App = () => {
 
           {/* public routes */}
           <Route index path='/accueil' element={<Accueil />} />
+          <Route index path='/recherche' element={<SearchAccueil />} />
           <Route path='/login' element={<Login />} />
           <Route path='/' element={<Accueil />} />
           <Route path='/stagiaires' element={<Stagiaires />} />
-          <Route path='/profile' element={<Stagiaire />} />
+          <Route path='/stagiaire' element={<Stagiaire />} />
+          <Route path='/profile' element={<Documents />} />
 
           {/* protected routes (require login) */}
           <Route element={<RequireAuth />}>
