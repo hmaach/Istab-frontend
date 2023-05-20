@@ -1,17 +1,22 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { RiSearchLine } from 'react-icons/ri'
-import { search } from '../../app/api/axios';
+import { search } from '../../app/api/SearchAxios'
 import { useDispatch } from 'react-redux';
 import { setResult } from '../../features/search/searchSlice';
 import { useNavigate } from 'react-router';
+import GetCookie from "../../cookies/JWT/GetCookie";
+const token = GetCookie('jwt')
 
 const Search = () => {
 
     const [query, setQuery] = useState('');
     const [data, setData] = useState({});
+
     const dispatch = useDispatch()
+
     const [err, setErr] = useState();
+    
     const navigate = useNavigate();
 
     const handleInputChange = (e) => {
@@ -20,13 +25,14 @@ const Search = () => {
 
     const handleSearch = (e) => {
         e.preventDefault()
-        search(query)
+        search(query,token)
             .then((data) => {
                 setData(data)
                 navigate('/recherche');
             })
             .catch((error) => {
                 setErr(error);
+                console.log(err)
             });
     }
 

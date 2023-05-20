@@ -8,6 +8,27 @@
   right: 2rem;
   top: 4rem;
 }
+#personr {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+#namer {
+  font-weight: bold;
+  font-size: 0.9rem !important;
+  margin-bottom: 0 !important;
+  color: var(--color-text);
+  ;
+}
+
+#idr {
+  color: var(--color-text-light);
+  font-size: 0.7rem !important;
+
+}
 #serch-input {
   width: 100%;
   height: 40px;

@@ -15,6 +15,8 @@ import { useDispatch } from 'react-redux';
 import { setCredentials } from './features/auth/authSlice';
 import RequireAdmin from './features/auth/RequireAdmin';
 import SearchAccueil from './components/accueil/SearchAccueil';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const { localStorage } = window;
 
 const App = () => {
@@ -36,6 +38,18 @@ const App = () => {
   }
   return (
     <div id="container">
+      <ToastContainer
+        position="top-center"
+        autoClose={4000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <HeaderWrapper />
       <NavBarWrapper />
       <Routes>

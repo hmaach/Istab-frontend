@@ -7,16 +7,16 @@ const AccountMight = (props) => {
   return (
     <Link to='/profile' id="box-account-might" key={stagiaire.id}>
       <div id="container-might">
-        <span id="user-box">
+        <span id="user-boxh" style={{display:'flex'}}>
           <img
-            id="person"
+            id="personr"
             src="ayadi.jpeg"
             alt="profile"
           />
           <span>
             {/* <p id="name"><span className='first-letter'>{prenom}</span> <span className='first-letter'>{nom}</span></p> */}
-            <p id="name"><span className='first-letter'>{stagiaire.prenom}</span> <span className='first-letter'>{stagiaire.nom}</span></p>
-            <p id="id" className='first-letter'>{stagiaire.filiere}</p>
+            <p id="namer"><span className='first-letter'>{stagiaire.prenom}</span> <span className='first-letter'>{stagiaire.nom}</span></p>
+            <p id="idr" className='first-letter'>{stagiaire.filiere}</p>
           </span>
         </span>
       </div>

@@ -245,7 +245,17 @@
   border: 0.3px solid #e2e2e2c4;
   box-shadow: #e2e2e2c4 3px 2px 4px;
   display: flex;
+  flex-direction: column;
   padding: 5px;
+}
+.addPost{
+  min-height: 40px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  width: 95%;
+  overflow: hidden;
+  border: 0.3px solid #e2e2e2c4;
+  box-shadow: #e2e2e2c4 3px 2px 4px;
 }
 
 #profile-tweet {
@@ -260,6 +270,7 @@
   /* padding: 10px; */
   /* padding-left: 15px; */
   margin: 10px;
+  margin-top: 20px;
 }
 
 #name-id {
@@ -276,7 +287,7 @@
 }
 
 #box-tweet {
-  width: 90%;
+  width: 97%;
   padding-left: 10px;
 }
 
@@ -309,6 +320,7 @@
 .type {
   display: flex;
   gap: 8px;
+  margin-top: 15px;
 }
 
 .type:nth-child(2) {
@@ -322,8 +334,11 @@
 }
 #post-box {
   display: flex;
-  justify-content: flex-end;
-  padding-top: 8px;
+  /* justify-content: flex-end; */
+  flex-direction: column;
+  /* border: red 1px solid; */
+  padding: 8px;
+  margin: 8px;
 }
 
 #span-more {
@@ -427,7 +442,8 @@
 #text-tweet {
   width: 100%;
   text-align: left;
-  margin-right: 20px;
+  margin-bottom: 0 !important;
+  /* margin-right: 20px; */
 }
 
 #red-heart {

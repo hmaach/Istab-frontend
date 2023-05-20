@@ -125,7 +125,7 @@ function Login() {
                                         ref={userRef}
                                         onChange={(e) => { handleUserInput(e); handleInputChange(e) }}
                                     />
-                                    <label>Email</label>
+                                    <label className='label_login'>Email</label>
                                 </div>
 
                                 <div className="input-wrap">
@@ -138,7 +138,7 @@ function Login() {
                                         value={password}
                                         onChange={(e) => { handlePwdInput(e); handleInputChange(e) }}
                                     />
-                                    <label>Mot de passe</label>
+                                    <label className='label_login'>Mot de passe</label>
                                 </div>
 
                                 <input type="submit" value="Connecxion" className="sign-btn" />

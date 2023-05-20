@@ -145,7 +145,7 @@ main {
     transition: 0.4s;
 }
 
-label {
+.label_login {
     position: absolute;
     left: 0;
     top: 50%;
@@ -160,7 +160,7 @@ label {
     border-bottom-color: #151111;
 }
 
-.input-field.active+label {
+.input-field.active+.label_login {
     font-size: 0.75rem;
     top: -2px;
 }
