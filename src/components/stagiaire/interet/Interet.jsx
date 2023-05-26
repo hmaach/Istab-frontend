@@ -1,21 +1,25 @@
 import React from 'react'
 import './interet.css'
+import Interets from './Interets';
 
-const Interet = () => {
-  const interets = ["Voyage", "Football", "Football", "Football"]
+const Interet = (header) => {
+  const { interets } = header;
+  if (!interets) {
+    return null; 
+  }
+
+  
   return (
     <div className="skills-section px-3 px-lg-4">
       <h2 className="h3 mb-3">Centres d'intérêt</h2>
       <div className="row">
-        {
-          interets.map((interet, index) => {
-            return <div className="col-md-6" key={index}>
-              <div className="mb-2">
-                <strong>{interet}</strong>
-              </div>
-            </div>
-          })
-        }
+      <div className="timeline">
+          {
+            interets.map(interet => {
+              return <Interets interet = {interet} key={interet.id} />
+            })
+          }
+        </div>
       </div>
     </div>
   )

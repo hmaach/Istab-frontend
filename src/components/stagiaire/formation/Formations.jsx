@@ -2,37 +2,13 @@ import React from 'react'
 import './formations.css'
 import Formation from './Formation'
 
-const Formations = () => {
-  const formations = [
-    {
-      "id": 1,
-      "titre": "DIPLOME TECHNICIEN SPÉCIALISÉ EN développement digital",
-      "place": "Institut des technologies appliquée Berkane",
-      "dateDeb": "septembre 2021",
-      "dateFin": "juin 2023"
-    },
-    {
-      "id": 2,
-      "titre": "DIPLOME TECHNICIEN SPÉCIALISÉ EN développement digital",
-      "place": "Institut des technologies appliquée Berkane",
-      "dateDeb": "septembre 2021",
-      "dateFin": "juin 2023"
-    },
-    {
-      "id": 3,
-      "titre": "DIPLOME TECHNICIEN SPÉCIALISÉ EN développement digital",
-      "place": "Institut des technologies appliquée Berkane",
-      "dateDeb": "septembre 2021",
-      "dateFin": "juin 2023"
-    },
-    {
-      "id": 4,
-      "titre": "DIPLOME TECHNICIEN SPÉCIALISÉ EN développement digital",
-      "place": "Institut des technologies appliquée Berkane",
-      "dateDeb": "septembre 2021",
-      "dateFin": "juin 2023"
-    },
-  ]
+const Formations = (header) => {
+  const { formations } = header ;
+  if (!formations) {
+    return null; 
+  }
+  
+  
   return (
     <div>
       <div className="education-section px-3 px-lg-4 pb-4">
