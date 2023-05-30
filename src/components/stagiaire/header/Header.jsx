@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-
 import { updateCv } from '../../../app/api/stagiaireAxios';
 import './header.css';
 import Profile from '../assets/ayadi_oussama.jpg';
 import Stagiaire from '../Stagiaire';
-import { Edit as EditIcon } from '@mui/icons-material';
+import { Edit as EditIcon, Add as AddIcon } from '@mui/icons-material';
 import {
   Button,
   Dialog,
@@ -18,7 +17,6 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/system';
 
-
 const StyledEditIcon = styled(EditIcon)`
   font-size: 24px;
   color: blue;
@@ -28,6 +26,17 @@ const StyledEditIcon = styled(EditIcon)`
     color: red;
   }
 `;
+
+const StyledAddIcon = styled(AddIcon)`
+  font-size: 48px;
+  color: blue;
+  transition: color 0.3s ease;
+  cursor: pointer;
+  &:hover {
+    color: red;
+  }
+`;
+
 const generatePDF = () => {
   const stagiaireElement = document.getElementById('cv'); // ID of the container element for the Stagiaire component
 
@@ -84,18 +93,18 @@ const Header = (props) => {
   const token = localStorage.getItem('token');
   const handleSaveAproposDeMoi = async () => {
     try {
-      const id = props.header.id; 
+      const id = props.header.id;
       const data = new FormData();
-      data.append('propos', aproposDeMoi); 
-  
-      await updateCv(id, data, token); 
+      data.append('propos', aproposDeMoi);
+
+      await updateCv(id, data, token);
       console.log("CV updated successfully");
     } catch (error) {
       console.log(error);
     }
   };
-  
-  
+
+
 
   const header = props.header;
 
@@ -132,18 +141,29 @@ const Header = (props) => {
             <div className="propos-de-moi-section mb-4">
               <h2 className="h3 mb-3">
                 A propos de moi
-                <IconButton aria-label="Edit" className="edit-icon" onClick={handleEditFormOpen}>
-                  <StyledEditIcon />
-                </IconButton>
+                {header.propos && (
+                  <IconButton aria-label="Edit" className="edit-icon" onClick={handleEditFormOpen}>
+                    <StyledEditIcon />
+                  </IconButton>
+                )}
               </h2>
-              <p>{header.propos}</p>
+              {header.propos ? (
+                <p>{header.propos}</p>
+              ) : (
+                <div className="add-icon-container">
+                  <StyledAddIcon className="add-icon" onClick={handleEditFormOpen} />
+                  <p className="add-text">Ce champ est vide</p>
+                </div>
+              )}
               <Dialog open={editFormOpen} onClose={handleEditFormClose} fullWidth maxWidth="lg">
                 <DialogTitle>Edit A propos de moi</DialogTitle>
                 <DialogContent>
-                  <form onSubmit={(e) => {
-                    e.preventDefault(); // Prevent default form submission
-                    handleSaveAproposDeMoi(); // Call the save function manually
-                  }}>
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault(); // Prevent default form submission
+                      handleSaveAproposDeMoi(); // Call the save function manually
+                    }}
+                  >
                     <TextField
                       label="A propos de moi"
                       multiline
@@ -161,7 +181,6 @@ const Header = (props) => {
                   </form>
                 </DialogContent>
               </Dialog>
-
             </div>
           </div>
           <div className="col-md-5 offset-md-1">

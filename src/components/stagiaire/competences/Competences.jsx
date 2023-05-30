@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './competences.css';
-import { Edit as EditIcon } from '@mui/icons-material';
+
+import { Edit as EditIcon, Add as AddIcon } from '@mui/icons-material';
 import {
   Button,
   Dialog,
@@ -21,6 +22,16 @@ const StyledEditButton = styled(Button)`
   }
 `;
 
+const StyledAddIcon = styled(AddIcon)`
+  font-size: 48px;
+  color: blue;
+  transition: color 0.3s ease;
+  cursor: pointer;
+  &:hover {
+    color: red;
+  }
+`;
+
 const Competences = ({ header }) => {
   const { competences } = header;
 
@@ -29,14 +40,17 @@ const Competences = ({ header }) => {
   const [categorie, setCategorie] = useState('');
   const [description, setDescription] = useState('');
 
-  if (!competences) {
-    return null;
-  }
-
   const handleEditFormOpen = (competence, index) => {
     setEditIndex(index);
     setCategorie(competence.categorie);
     setDescription(competence.desc);
+    setEditFormOpen(true);
+  };
+
+  const handleAddFormOpen = () => {
+    setEditIndex(null);
+    setCategorie('');
+    setDescription('');
     setEditFormOpen(true);
   };
 
@@ -64,10 +78,13 @@ const Competences = ({ header }) => {
 
   return (
     <div className="skills-section px-3 px-lg-4">
-      <h2 className="h3 mb-3 competence">
-        Compétences
-      </h2>
-      <Dialog open={editFormOpen} onClose={handleEditFormClose} fullWidth maxWidth="lg">
+      <h2 className="h3 mb-3 competence">Compétences</h2>
+      <Dialog
+        open={editFormOpen}
+        onClose={handleEditFormClose}
+        fullWidth
+        maxWidth="lg"
+      >
         <DialogTitle>Edit Compétences</DialogTitle>
         <DialogContent>
           <form
@@ -102,31 +119,47 @@ const Competences = ({ header }) => {
         </DialogContent>
       </Dialog>
       <div className="row">
-        {competences.map((competence, index) => (
-          <div className="col-md-6" key={index}>
-            <div className="mb-2">
-              <strong>{competence.categorie}</strong>
-              <br />
-              {competence.desc && <span>{competence.desc}<br /></span>}
-              {competence.skills && (
-                <span>
-                  {competence.skills.map((skill, skillIndex) => (
-                    <span key={skillIndex}>
-                      {skill}
-                      {skillIndex !== competence.skills.length - 1 ? ', ' : ''}
-                    </span>
-                  ))}
-                </span>
-              )}
-              <StyledEditButton
-                variant="text"
-                onClick={() => handleEditFormOpen(competence, index)}
-              >
-                Modifier
-              </StyledEditButton>
+        {competences && competences.length > 0 ? (
+          // Render existing competences
+          competences.map((competence, index) => (
+            <div className="col-md-6" key={index}>
+              <div className="mb-2">
+                <strong>{competence.categorie}</strong>
+                <br />
+                {competence.desc && <span>{competence.desc}<br /></span>}
+                {competence.skills && (
+                  <span>
+                    {competence.skills.map((skill, skillIndex) => (
+                      <span key={skillIndex}>
+                        {skill}
+                        {skillIndex !== competence.skills.length - 1 ? ', ' : ''}
+                      </span>
+                    ))}
+                  </span>
+                )}
+                <StyledEditButton
+                  variant="text"
+                  onClick={() => handleEditFormOpen(competence, index)}
+                >
+                  Modifier
+                </StyledEditButton>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="col-md-12 d-flex justify-content-center align-items-center">
+            <div className="mb-2 text-center">
+              <StyledAddIcon className="add-icon" onClick={handleAddFormOpen} />
+              <p className="add-text">Ce champ est vide</p>
             </div>
           </div>
-        ))}
+        )}
+        <div className="col-md-12 d-flex justify-content-center align-items-center">
+          <div className="mb-2 text-center">
+            <StyledAddIcon className="add-icon" onClick={handleAddFormOpen} />
+            <p className="add-text">Ajouter une compétence</p>
+          </div>
+        </div>
       </div>
     </div>
   );
