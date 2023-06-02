@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { updateCv } from '../../../app/api/stagiaireAxios';
+import { updateCv, updateProfilePicture } from '../../../app/api/stagiaireAxios';
+import GetCookie from '../../../cookies/JWT/GetCookie';
 import './header.css';
-import Profile from '../assets/ayadi_oussama.jpg';
+import Profile from '../assets/ayadi_oussama.png';
 import Stagiaire from '../Stagiaire';
-import { Edit as EditIcon, Add as AddIcon } from '@mui/icons-material';
+import { Edit as EditIcon, Add as AddIcon, PhotoCamera as PhotoCameraIcon } from '@mui/icons-material';
 import {
   Button,
   Dialog,
@@ -34,6 +35,22 @@ const StyledAddIcon = styled(AddIcon)`
   cursor: pointer;
   &:hover {
     color: red;
+  }
+`;
+
+const StyledPhotoCameraIcon = styled(PhotoCameraIcon)`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 24px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 4px;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.8);
   }
 `;
 
@@ -72,11 +89,15 @@ const generatePDF = () => {
   });
 };
 
-
-
 const Header = (props) => {
   const [editFormOpen, setEditFormOpen] = useState(false);
   const [aproposDeMoi, setAproposDeMoi] = useState(props.header.propos);
+  const [selectedProfilePicture, setSelectedProfilePicture] = useState(null);
+  const token = GetCookie('jwt');
+
+  useEffect(() => {
+    setAproposDeMoi(props.header.propos); // Update the value when the prop changes
+  }, [props.header.propos]);
 
   const handleEditFormOpen = () => {
     setAproposDeMoi(props.header.propos);
@@ -90,33 +111,77 @@ const Header = (props) => {
   const handleAproposDeMoiChange = (event) => {
     setAproposDeMoi(event.target.value);
   };
-  const token = localStorage.getItem('token');
+
   const handleSaveAproposDeMoi = async () => {
     try {
       const id = props.header.id;
-      const data = new FormData();
-      data.append('propos', aproposDeMoi);
+      const data = { propos: aproposDeMoi };
 
       await updateCv(id, data, token);
-      console.log("CV updated successfully");
+      console.log('CV updated successfully');
+
+      // Update the state with the new value
+      setAproposDeMoi(data.propos);
     } catch (error) {
       console.log(error);
     }
+    setEditFormOpen(false);
   };
 
+  const handleProfilePictureChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedProfilePicture(file);
+    }
+  };
 
+  const handleSaveProfilePicture = async () => {
+    try {
+      const id = props.header.id;
+      const formData = new FormData();
+      formData.append('profile_picture', selectedProfilePicture);
+
+      await updateProfilePicture(id, formData, token);
+      console.log('Profile picture updated successfully');
+    } catch (error) {
+      console.log(error);
+    }
+    setEditFormOpen(false);
+  };
 
   const header = props.header;
-
   return (
     <div>
       <div className="cover-bg p-3 p-lg-4 text-white">
         <div className="row">
           <div className="col-lg-4 col-md-5">
-            <div className="avatar hover-effect bg-white shadow-sm p-1">
-              <img src={Profile} width="200" height="200" alt="pic" />
+            <div className="avatar hover-effect bg-white shadow-sm p-1 position-relative">
+              <img
+                src={props.header.profile_picture || Profile}
+                width="200"
+                height="200"
+                alt="pic"
+              />
+              <label htmlFor="profilePictureInput">
+                <IconButton component="span" className="edit-profile-picture-icon">
+                  <StyledPhotoCameraIcon />
+                </IconButton>
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                id="profilePictureInput"
+                style={{ display: "none" }}
+                onChange={handleProfilePictureChange}
+              />
             </div>
+            {selectedProfilePicture && (
+              <div>
+                <Button onClick={handleSaveProfilePicture}>Save Profile Picture</Button>
+              </div>
+            )}
           </div>
+
           <div className="col-lg-8 col-md-7 text-center text-md-start">
             <h2 className="h1 mt-2" data-aos="fade-left" data-aos-delay="0">
               {header.nom} {header.prenom}
@@ -125,12 +190,12 @@ const Header = (props) => {
               {header.filiere}
             </p>
             <div className="d-print-none" data-aos="fade-left" data-aos-delay="200">
-              <a
+              <Button
                 className="btn btn-light text-dark shadow-sm mt-1 me-1"
                 onClick={generatePDF}
               >
                 CV sous forme PDF
-              </a>
+              </Button>
             </div>
           </div>
         </div>
@@ -155,18 +220,17 @@ const Header = (props) => {
                   <p className="add-text">Ce champ est vide</p>
                 </div>
               )}
-              <Dialog open={editFormOpen} onClose={handleEditFormClose} fullWidth maxWidth="lg">
-                <DialogTitle>Edit A propos de moi</DialogTitle>
+              <Dialog open={editFormOpen} onClose={handleEditFormClose} fullWidth maxWidth="sm">
+                <DialogTitle>Edit Interet</DialogTitle>
                 <DialogContent>
                   <form
                     onSubmit={(e) => {
-                      e.preventDefault(); // Prevent default form submission
-                      handleSaveAproposDeMoi(); // Call the save function manually
+                      e.preventDefault();
+                      handleSaveAproposDeMoi();
                     }}
                   >
                     <TextField
                       label="A propos de moi"
-                      multiline
                       variant="outlined"
                       fullWidth
                       value={aproposDeMoi}

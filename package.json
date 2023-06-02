@@ -21,6 +21,8 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.4.0",
     "bootstrap": "^5.2.3",
+    "cloudinary": "^1.37.0",
+    "cloudinary-react": "^1.8.1",
     "date-fns": "^2.30.0",
     "file-saver": "^2.0.5",
     "firebase": "^9.21.0",

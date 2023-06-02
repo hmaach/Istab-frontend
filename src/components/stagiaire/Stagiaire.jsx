@@ -13,6 +13,7 @@ import { useParams } from 'react-router-dom';
 const Stagiaire = () => {
   const { id } = useParams();
   const [stagiaireData, setStagiaireData] = useState({});
+
   useEffect(() => {
     getCv(id)
       .then((data) => {
@@ -28,29 +29,24 @@ const Stagiaire = () => {
           interets: data.stagiaire.interets,
           propos: data.stagiaire.cv ? data.stagiaire.cv.propos : '',
           competences: data.stagiaire.competences,
-          formations : data.stagiaire.formations,
+          formations: data.stagiaire.formations,
           experiences: data.stagiaire.experiences.map((experience) => ({
             ...experience,
             missions: JSON.parse(experience.missions),
           })),
         });
-        for (let i = 0; i < data.stagiaire.interets.length; i++) {
-          console.log(data.stagiaire.interets[i].libelle);
-        } // Log the competences property
       })
       .catch((error) => {
         console.log(error);
       });
   }, [id]);
-  
+
   const handleAproposDeMoiChange = (newAproposDeMoi) => {
     setStagiaireData((prevState) => ({
       ...prevState,
-      propos: newAproposDeMoi
+      propos: newAproposDeMoi,
     }));
   };
-  
-  
 
   return (
     <div className="cover shadow-lg bg-white" id="cv">
