@@ -5,7 +5,7 @@ import "./App.css";
 import NavBar from "./components/navBar/navbar";
 import Header from './components/header/Header';
 import Accueil from './components/accueil/Accueil';
-import Calendrier from './components/calendrier/Calendrier';
+import Calendrier from './components/calendrier/Calendrier'; 
 import Documents from './components/documents/Documents';
 import Stagiaires from './components/stagiaires/Stagiaires';
 import Login from './features/auth/Login';
