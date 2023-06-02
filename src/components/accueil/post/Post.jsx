@@ -11,6 +11,9 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
+import ImageGallery from 'react-image-gallery';
+import 'react-image-gallery/styles/css/image-gallery.css';
+import { Avatar, Badge } from "@mui/material";
 
 const Post = (props, { setPosts }) => {
 
@@ -18,6 +21,27 @@ const Post = (props, { setPosts }) => {
     const [like, setLike] = useState(post.liked);
     const token = GetCookie('jwt')
     const user = useSelector(selectCurrentUser)
+
+
+    const images = post.images.map((image) => ({
+        original: image,
+        thumbnail: image,
+    }));
+    // console.log(images);
+    // const images = [
+    //     {
+    //         original: 'post/img1.png',
+    //         thumbnail: 'post/img1.png',
+    //     },
+    //     {
+    //         original: 'post/img2.jpg',
+    //         thumbnail: 'post/img2.jpg',
+    //     },
+    //     {
+    //         original: 'post/img3.jpg',
+    //         thumbnail: 'post/img3.jpg',
+    //     },
+    // ];
 
     const [showFullContent, setShowFullContent] = useState(false);
 
@@ -55,52 +79,88 @@ const Post = (props, { setPosts }) => {
     const handleUpdateCallback = () => {
         handleUpdate()
     };
-    
+
     const handleDownloadPDF = (pdfPath) => {
         axios({
-          url: `http://127.0.0.1:8000/api/downloadpdf?pdf_path=${pdfPath}`,
-          method: 'GET',
-          responseType: 'blob', 
+            url: `http://127.0.0.1:8000/api/downloadpdf?pdf_path=${pdfPath}`,
+            method: 'GET',
+            responseType: 'blob',
         })
-          .then((response) => {
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', 'istab.pdf');
-            document.body.appendChild(link);
-            link.click();
-          })
-          .catch((error) => {
-            console.error('Error downloading PDF:', error);
-          });
-      };
+            .then((response) => {
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'istab.pdf');
+                document.body.appendChild(link);
+                link.click();
+            })
+            .catch((error) => {
+                console.error('Error downloading PDF:', error);
+            });
+    };
 
     const handleDeletePost = (deletedPost) => {
         onSubmit(deletedPost);
     }
 
+    const stringToColor = (string) => {
+        let hash = 0;
+        let i;
+
+        /* eslint-disable no-bitwise */
+        for (i = 0; i < string.length; i += 1) {
+            hash = string.charCodeAt(i) + ((hash << 5) - hash);
+        }
+
+        let color = '#';
+
+        for (i = 0; i < 3; i += 1) {
+            const value = (hash >> (i * 8)) & 0xff;
+            color += `00${value.toString(16)}`.slice(-2);
+        }
+        /* eslint-enable no-bitwise */
+
+        return color;
+    }
+
+    const stringAvatar = (name) => {
+        return {
+            sx: {
+                bgcolor: stringToColor(name),
+            },
+            children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+        };
+    }
+
     return (
+
         <div id="tweet-box">
             <div id="box-tweet">
                 <div id="name-id">
+
                     <div style={{ display: "flex" }}>
 
                         <div id="profile-tweet">
-                            <img
-                                src="ayadi.jpeg"
-                                alt="profile"
-                                id="image-profile"
-                            />
+                            {post.profile
+                                ? <img
+                                    src="ayadi.jpeg"
+                                    alt="profile"
+                                    id="image-profile"
+                                />
+                                : <Avatar id="image-profile" {...stringAvatar(`${post.prenom} ${post.nom}`)} />
+                            }
                         </div>
                         <div className="publieur">
 
                             <span id="flex-tweet">
+
                                 <p
                                     id="tweet-name"
                                     className="first-letter no-margin"
                                 >
                                     {post.prenom} {post.nom}
                                 </p>
+
                                 <p
                                     id="type_poste"
                                     className="no-margin date_poste first-letter"
@@ -118,12 +178,23 @@ const Post = (props, { setPosts }) => {
 
                             </span>
                         </div>
-
                         <div className="type">
-                            {/* <span className="role_poste first-letter">( {post.role} )</span> */}
-                            <span id="type_poste" className="first-letter">{post.type}</span>
+                            <Badge
+                            className="first-letter"
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                color="primary"
+                                badgeContent={post.type}
+                            >
+                                {/* <span className="role_poste first-letter">( {post.role} )</span> */}
+                                <span id="type_poste" className="first-letter"></span>
+                            </Badge>
                         </div>
+
                     </div>
+
                     {user &&
                         <CustomizedMenus
                             user={user}
@@ -134,6 +205,7 @@ const Post = (props, { setPosts }) => {
                         />
                     }
                 </div>
+
                 <div id="post-box">
                     <p id="text-tweet">
                         {showFullContent ? post.libelle : `${post.libelle.substring(0, 70)}`}
@@ -143,11 +215,30 @@ const Post = (props, { setPosts }) => {
                     </p>
                 </div>
             </div>
-            {props.index === 1 && (
+            {/* {props.index === 1 && (
                 <div className="img_box">
-                    <img className="img_post" src="/post_test.jpg" />
+                    <img className="img_post_pub" src="/post_test.jpg" />
                 </div>
-            )}
+            )} */}
+            {post.images.length>0
+            // !post.pdf_path 
+            &&
+                <div className="image_post">
+                    <ImageGallery items={images} />
+                </div>
+            }
+
+
+            {post.imgs?.map((img, index) => (
+                <div key={index}>
+
+                    <img
+                        src={URL.createObjectURL(img)}
+                        alt={`Image ${index}`}
+                        className="img_post"
+                    />
+                </div>
+            ))}
 
             {post.pdf_path && (
                 <div style={{ display: 'flex', justifyContent: 'end' }}>
@@ -163,11 +254,11 @@ const Post = (props, { setPosts }) => {
                 </div>
             )}
 
-            {props.index === 2 && (
+            {/* {props.index === 2 && (
                 <div style={{ display: 'flex', justifyContent: 'start' }}>
                     <a className="post_lien" href="#">llllllllllslihjzaodizz</a>
                 </div>
-            )}
+            )} */}
 
 
 
@@ -200,6 +291,7 @@ const Post = (props, { setPosts }) => {
             }
 
         </div>
+
     );
 };
 

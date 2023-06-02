@@ -6,7 +6,6 @@ import NavBar from "./components/navBar/navbar";
 import Header from './components/header/Header';
 import Accueil from './components/accueil/Accueil';
 import Calendrier from './components/calendrier/Calendrier';
-import Documents from './components/documents/Documents';
 import Stagiaires from './components/stagiaires/Stagiaires';
 import Login from './features/auth/Login';
 import Layout from './features/auth/Layout';
@@ -17,6 +16,8 @@ import RequireAdmin from './features/auth/RequireAdmin';
 import SearchAccueil from './components/accueil/SearchAccueil';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Profile from './components/profile/Profile';
+import Archives from './components/archives/Archives';
 const { localStorage } = window;
 
 const App = () => {
@@ -62,16 +63,16 @@ const App = () => {
           <Route path='/' element={<Accueil />} />
           <Route path='/stagiaires' element={<Stagiaires />} />
           <Route path='/stagiaire' element={<Stagiaire />} />
-          <Route path='/profile' element={<Documents />} />
 
           {/* protected routes (require login) */}
           <Route element={<RequireAuth />}>
             <Route path='/calendrier' element={<Calendrier />} />
+            <Route path='/profile' element={<Profile />} />
+            <Route path='/archives' element={<Archives />} />
           </Route>
 
           {/* admin routes */}
           <Route element={<RequireAdmin />}>
-            <Route path='/documents' element={<Documents />} />
           </Route>
         </Route>
       </Routes>

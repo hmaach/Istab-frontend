@@ -1,6 +1,8 @@
 import React from 'react';
 import { PictureAsPdf } from '@mui/icons-material';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';
 import { useState } from 'react';
 import './Post.css'
@@ -19,7 +21,7 @@ import {
 } from '@mui/material';
 import { useRef } from 'react';
 
-export default function SimpleAccordion({ filieres, onSubmit,user }) {
+export default function SimpleAccordion({ filieres, onSubmit, user }) {
 
     const archive_categorie = user.pdf_categories;
     const [postLib, setPostLib] = useState('');
@@ -27,9 +29,12 @@ export default function SimpleAccordion({ filieres, onSubmit,user }) {
     const [audience, setAudience] = useState('');
     const [filiere_id, setFiliere] = useState('');
     const [pdf_file, setPdf_file] = useState(null);
+    const [imgs, setImgs] = useState([]);
     const [pdf_archive_categorie, setPdf_archive_categorie] = useState(false);
     const [pdf_archive_categorie_value, setPdf_archive_categorie_value] = useState(null);
-    const fileInputRef = useRef(null);
+    const [libelle_pdf, setLibelle_pdf] = useState('');
+    const PdfInputRef = useRef(null);
+    const ImgInputRef = useRef(null);
     const maxLength = 100;
 
     const handleChangeAudience = (event) => {
@@ -50,8 +55,12 @@ export default function SimpleAccordion({ filieres, onSubmit,user }) {
         setPostLib(text);
     };
 
-    const handleIconClick = () => {
-        fileInputRef.current.click();
+    const handlePdfIconClick = () => {
+        PdfInputRef.current.click();
+    };
+
+    const handleIconClickImg = () => {
+        ImgInputRef.current.click();
     };
 
     const handleFileSelect = (event) => {
@@ -83,6 +92,21 @@ export default function SimpleAccordion({ filieres, onSubmit,user }) {
         setPdf_archive_categorie(false)
     };
 
+    const handleImagesSelect = (event) => {
+        const files = event.target.files;
+        const selectedImages = Array.from(files).slice(0, 10);
+        setImgs((prevImgs) => [...prevImgs, ...selectedImages]);
+        console.log(selectedImages);
+    };
+
+    const removeImage = (index) => {
+        if (imgs.length === 1) {
+            setImgs([])
+        } else
+            setImgs((prevImgs) => prevImgs.filter((_, i) => i !== index));
+    };
+
+
 
     const handleSubmit = (e) => {
 
@@ -96,11 +120,14 @@ export default function SimpleAccordion({ filieres, onSubmit,user }) {
             audience_id: filiere_id,
             pdf: pdf_file,
             pdf_archive_categorie: pdf_archive_categorie,
-            pdfCategorieId: pdf_archive_categorie_value?.id
+            pdfCategorieId: pdf_archive_categorie_value?.id,
+            libelle_pdf:libelle_pdf,
+            imgs: imgs,
 
         };
 
         onSubmit(newPost);
+        // console.log(newPost);
         setPostLib('');
         setPostType('');
         setAudience('');
@@ -108,6 +135,7 @@ export default function SimpleAccordion({ filieres, onSubmit,user }) {
         setPdf_archive_categorie_value(null);
         setPdf_archive_categorie(false);
         setPdf_file(null)
+        setLibelle_pdf(null)
     };
 
     return (
@@ -186,21 +214,64 @@ export default function SimpleAccordion({ filieres, onSubmit,user }) {
                         }
                         {pdf_file && pdf_archive_categorie
                             ?
-                            <Autocomplete
-                                disablePortal
-                                id="combo-box-demo"
-                                options={archive_categorie}
-                                value={pdf_archive_categorie_value}
-                                onChange={(event, newValue) => {
-                                    setPdf_archive_categorie_value(newValue);
-                                }}
-                                isOptionEqualToValue={(option, value) => option.id === value?.id}
-                                sx={{ width: 300 }}
-                                renderInput={(params) => <TextField {...params} label="Categorie" />}
-                            />
+                            <div className='pdf_categorie'>
+                                <TextField 
+                                id="standard-basic" 
+                                label="Nom du document" 
+                                className='nom_document' 
+                                variant="standard"
+                                required
+                                value={libelle_pdf}
+                                onChange={(e)=>setLibelle_pdf(e.target.value)}
+                                />
+                                <Autocomplete
+                                    disablePortal
+                                    id="combo-box-demo"
+                                    required
+                                    options={archive_categorie}
+                                    value={pdf_archive_categorie_value}
+                                    onChange={(event, newValue) => {
+                                        setPdf_archive_categorie_value(newValue);
+                                    }}
+                                    isOptionEqualToValue={(option, value) => option.id === value?.id}
+                                    sx={{ width: 300 }}
+                                    renderInput={(params) => <TextField {...params} label="Categorie" />}
+                                />
+                            </div>
                             : null}
-                        <div className="bottom">
-                            <ul className="icons">
+                        {imgs && (
+                            <div className="imgs_post">
+                                {imgs.map((img, index) => (
+                                    <div key={index}>
+                                        <span className="remove_img" onClick={() => removeImage(index)}>
+                                            <DeleteIcon />
+                                        </span>
+                                        <img
+                                            src={URL.createObjectURL(img)}
+                                            alt={`Image ${index}`}
+                                            className="img_post"
+                                        />
+                                    </div>
+                                ))}
+                                {imgs.length < 10 && imgs.length != 0 ?
+                                    <span className='plus_img' onClick={handleIconClickImg}>
+                                        <input
+                                            type="file"
+                                            id="pdfInput"
+                                            accept=".png, .jpg"
+                                            multiple
+                                            ref={ImgInputRef}
+                                            style={{ display: 'none' }}
+                                            onChange={handleImagesSelect}
+                                        />
+                                        <AddPhotoAlternateIcon />
+                                    </span>
+                                    : null
+                                }
+                            </div>
+                        )}
+                        <div className="bottom-add-post">
+                            <ul className="icons-add-post">
                                 <li>
                                     <FormControl sx={{ m: 0, minWidth: 153 }}>
                                         <InputLabel
@@ -225,18 +296,34 @@ export default function SimpleAccordion({ filieres, onSubmit,user }) {
                                         </Select>
                                     </FormControl>
                                 </li>
-                                {!pdf_file &&
-                                    <li className="pdfPost" onClick={handleIconClick}>
+                                {!pdf_file && imgs.length === 0 ?
+                                    < li className="pdfPost" onClick={handlePdfIconClick}>
                                         <input
                                             type="file"
                                             id="pdfInput"
                                             accept=".pdf"
-                                            ref={fileInputRef}
+                                            ref={PdfInputRef}
                                             style={{ display: 'none' }}
                                             onChange={handleFileSelect}
                                         />
                                         <PictureAsPdf />
                                     </li>
+                                    : null
+                                }
+                                {!pdf_file && imgs.length === 0 ?
+                                    <li className="pdfPost" onClick={handleIconClickImg}>
+                                        <input
+                                            type="file"
+                                            id="pdfInput"
+                                            accept=".png, .jpg"
+                                            multiple
+                                            ref={ImgInputRef}
+                                            style={{ display: 'none' }}
+                                            onChange={handleImagesSelect}
+                                        />
+                                        <AddPhotoAlternateIcon />
+                                    </li>
+                                    : null
                                 }
                             </ul>
                             <div className="content">
@@ -252,6 +339,6 @@ export default function SimpleAccordion({ filieres, onSubmit,user }) {
                     </form>
                 </AccordionDetails>
             </Accordion>
-        </div>
+        </div >
     );
 }

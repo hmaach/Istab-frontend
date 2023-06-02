@@ -9,11 +9,14 @@ import { toast } from "react-toastify";
 import AddPost from "../post/AddPost";
 import Post from "../post/Post";
 import "./main.css";
+import { CircularProgress } from "@mui/material";
 
 const Main = () => {
   const [posts, setPosts] = useState([]);
   const [filieres, setFilieres] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [page, setPage] = useState(1)
   const [err, setErr] = useState();
   const curUser = useSelector(selectCurrentUser);
   const token = GetCookie("jwt");
@@ -23,9 +26,9 @@ const Main = () => {
 
   const fetchPosts = async () => {
     try {
-      getPublicPosts(token)
+      getPublicPosts(token, page)
         .then((data) => {
-          setPosts(data.postes);
+          setPosts((prevPosts) => [...prevPosts, ...data.postes]);
           setFilieres(data.filieres);
           setIsLoading(false);
         })
@@ -39,10 +42,31 @@ const Main = () => {
     }
   };
 
+  const fetchMorePosts = async () => {
+    setIsLoadingMore(true)
+    try {
+      getPublicPosts(token, page + 1)
+        .then((data) => {
+          setPosts((prevPosts) => [...prevPosts, ...data.postes]);
+          setPage(page + 1)
+          setIsLoadingMore(false)
+
+        })
+        .catch((error) => {
+          setErr(error);
+        });
+    } catch (error) {
+      setErr(error);
+      console.log(err);
+    }
+  }
+
   const handlePosterPost = (post) => {
+    // console.log(post);
     PosterPost(post, token)
       .then((data) => {
         console.log(data.message);
+        console.log(data.image_data);
         if (data.message === "success") {
           post = {
             ...post,
@@ -52,7 +76,7 @@ const Main = () => {
             prenom: curUser.prenom,
             role: curUser.role,
             reacts: 0,
-            pdf_path:data.pdf_path,
+            pdf_path: data.pdf_path,
             created_at: new Date().toLocaleString('en-US', {
               year: 'numeric',
               month: '2-digit',
@@ -96,7 +120,7 @@ const Main = () => {
     UpdatePost(updatedPost, token)
       .then((data) => {
         console.log(data.message);
-  
+
         if (data.message === "success") {
           setPosts((prevPosts) =>
             prevPosts.map((post) => (post.id === updatedPost.id ? updatedPost : post))
@@ -128,7 +152,7 @@ const Main = () => {
         });
       });
   };
-  
+
   const handleDeletePost = (deletedPost) => {
     if (deletedPost.user_id === curUser.id || curUser.role === 'admin') {
       SupprimerPost(deletedPost.id, token)
@@ -178,10 +202,10 @@ const Main = () => {
 
   useEffect(() => {
     fetchPosts();
-    const interval = setInterval(() => {
-      fetchPosts();
-    }, 1 * 60 * 1000);
-    return () => clearInterval(interval);
+    // const interval = setInterval(() => {
+    //   fetchPosts();
+    // }, 1 * 60 * 1000);
+    // return () => clearInterval(interval);
   }, []);
   if (posts) {
     return (
@@ -198,27 +222,40 @@ const Main = () => {
         {isLoading ? (
           <LoadingSpinner />
         ) : (
-          posts.map((post,index) => (
-            <Post
-              key={post.id}
-              post={post}
-              index ={index}
-              onSubmit={handleDeletePost}
-              setPosts={setPosts}
-              handleUpdateCallback2={() => handleUpdateCallback2(post)}
+          <>
+            {posts.map((post, index) => (
+              <Post
+                key={index}
+                post={post}
+                index={index}
+                onSubmit={handleDeletePost}
+                setPosts={setPosts}
+                handleUpdateCallback2={() => handleUpdateCallback2(post)}
+              />
+            ))}
+            < div className="div_get_more">
+              {isLoadingMore
+                ? <CircularProgress />
+                : <button className="get_more" onClick={fetchMorePosts}>Get more</button>
+              }
+            </div>
+          </>
+
+        )
+        }
+
+        {
+          showUpdateAlert && (
+            <UpdatePostAlert
+              onSubmit={handleUpdatePost}
+              post={selectedPost}
+              open={true}
+              filieres={filieres}
+              handleClose={handleClose}
             />
-          ))
-        )}
-        {showUpdateAlert && (
-          <UpdatePostAlert
-            onSubmit={handleUpdatePost}
-            post={selectedPost}
-            open={true}
-            filieres={filieres}
-            handleClose={handleClose}
-          />
-        )}
-      </div>
+          )
+        }
+      </div >
     );
   } else {
     return null;

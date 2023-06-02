@@ -11,11 +11,22 @@
 #personr {
   width: 35px;
   height: 35px;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
   border-radius: 50%;
   margin-right: 10px;
   margin-left: 10px;
 }
 
+.four_stagiaires{
+  text-align: left;
+}
+.right_loading{
+  /* border: red 1px solid; */
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+}
 #namer {
   font-weight: bold;
   font-size: 0.9rem !important;

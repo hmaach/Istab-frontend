@@ -7,6 +7,11 @@
         transform: rotate(360deg);
     }
 }
+@media screen and (min-width: 200px) and (max-width: 499px) {
+  .spinner_main{
+    width: 100% !important;
+}
+}
 
 .loading-spinner {
     width: 50px;
@@ -84,4 +89,3 @@
       transform: translate(24px, 0);
     }
   }
-  

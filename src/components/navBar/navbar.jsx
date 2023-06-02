@@ -34,9 +34,9 @@ const NavBar = () => {
           <IoIosPeople id="home-icon" />
           <p id="nav-title" className="bold">Stagiaires</p>
         </NavLink>
-        <NavLink to="/documents" activeclassname="active" id="row">
+        <NavLink to="/archives" activeclassname="active" id="row">
           <HiDocumentDuplicate id="home-icon" />
-          <p id="nav-title" className="bold">Documents</p>
+          <p id="nav-title" className="bold">Archives</p>
         </NavLink>
         <NavLink to="/profile" activeclassname="active" id="row">
           <CgProfile id="home-icon" />

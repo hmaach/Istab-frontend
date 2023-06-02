@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import NotificationSide from "./notifications/NotificationSide";
 import axios from "axios";
 import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
+import Box from '@mui/material/Box';
+import Skeleton from '@mui/material/Skeleton';
 
 const Right = () => {
   const [notifs, setNotifs] = useState([])
@@ -55,12 +57,20 @@ const Right = () => {
         <div id="might-like-box">
           <h2 id="title-might">Notifications</h2>
           {isLoadingNotif
-            ? (<LoadingSpinner/>)
+            // ? (<LoadingSpinner/>)
+            ?
+            <div className="right_loading">
+              <Box sx={{ width: 300 }}>
+                <Skeleton />
+                <Skeleton animation="wave" />
+                <Skeleton animation={false} />
+              </Box>
+            </div>
             : (
               notifs.map(notif => {
                 return (
                   <NotificationSide
-                  key={notif.id}
+                    key={notif.id}
                     notif={notif} />
                 )
               }
@@ -75,8 +85,15 @@ const Right = () => {
       {stagiaires &&
         <div id="might-like-box">
           <h2 id="title-might">Découvrez les stagiaires</h2>
-          {isLoadingNotif
-            ? (<LoadingSpinner/>)
+          {isLoadingStag
+            // ? (<LoadingSpinner />)
+            ? <div className="right_loading">
+              < Box sx={{ width: 300 }}>
+                <Skeleton />
+                <Skeleton animation="wave" />
+                <Skeleton animation={false} />
+              </Box>
+            </div>
             : (
               stagiaires.map(stagiaire => {
                 return (
@@ -94,7 +111,7 @@ const Right = () => {
           </div>
         </div>
       }
-    </div>
+    </div >
   );
 };
 

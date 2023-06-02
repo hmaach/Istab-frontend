@@ -20,7 +20,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  z-index: 3;
+  z-index: 5;
 }
 
 #nav-up {
@@ -181,6 +181,8 @@
   border-radius: 50%;
   margin-right: 10px;
   margin-left: 10px;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
 }
 
 #name {
@@ -237,7 +239,7 @@
     justify-content: space-between;
     /* border: red solid 1px; */
     border-bottom: none;
-    box-shadow: #c2c2c2 0px -2px 3px;
+    box-shadow: #5e5e5e6c 0px -2px 7px;
   }
 
   .nav-box {

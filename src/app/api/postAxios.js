@@ -5,12 +5,12 @@ import api from './baseURL'
 // })
 
 
-export const getPublicPosts = async (token = null) => {
+export const getPublicPosts = async (token = null,page) => {
     try {
         if (token) {
             const headers = { Authorization: `Bearer ${token}` };
             const response = await api.get('/poste', {
-                // params: { query: query },
+                params: { page: page },
                 headers
             });
             return response.data;
