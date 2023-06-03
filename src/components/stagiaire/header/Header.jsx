@@ -93,6 +93,7 @@ const Header = (props) => {
   const [editFormOpen, setEditFormOpen] = useState(false);
   const [aproposDeMoi, setAproposDeMoi] = useState(props.header.propos);
   const [selectedProfilePicture, setSelectedProfilePicture] = useState(null);
+
   const token = GetCookie('jwt');
 
   useEffect(() => {

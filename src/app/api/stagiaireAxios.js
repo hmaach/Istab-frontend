@@ -31,10 +31,6 @@ export const updateCv = async (id, request, token) => {
 
 export const updateProfilePicture = async (id, file, token) => {
   try {
-    console.log('handleSaveProfilePicture called'); // Log that the function is being called
-    console.log('ID:', id); // Log the ID parameter
-    console.log('File:', file); // Log the file parameter
-
     const formData = new FormData();
     formData.append('profile_picture', file);
 
@@ -43,7 +39,7 @@ export const updateProfilePicture = async (id, file, token) => {
       'Content-Type': 'multipart/form-data',
     };
 
-    const response = await api.post(`/stagiaire/${id}`, formData, { headers });
+    const response = await api.post(`/stagiaire/${id}/profile-picture`, formData, { headers });
     return response.data;
   } catch (error) {
     console.log(error);
