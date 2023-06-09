@@ -28,6 +28,16 @@ export const updateCv = async (id, request, token) => {
   }
 };
 
+export const updateCompetences = async (id, request) => {
+  try {
+    const response = await api.put(`/stagiaire/${id}`, request);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 
 export const updateProfilePicture = async (id, file, token) => {
   try {
@@ -48,3 +58,25 @@ export const updateProfilePicture = async (id, file, token) => {
 };
 
 
+export const importStagiaire = async (file) => {
+  try {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await api.post('/stagiaires/import', formData);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const fetchData = async () => {
+  try {
+    const response = await api.get('/stagiairesExc');
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

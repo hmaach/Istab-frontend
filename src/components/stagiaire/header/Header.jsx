@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { updateCv, updateProfilePicture } from '../../../app/api/stagiaireAxios';
+import { updateCv } from '../../../app/api/stagiaireAxios';
 import GetCookie from '../../../cookies/JWT/GetCookie';
 import './header.css';
 import Profile from '../assets/ayadi_oussama.png';
@@ -92,7 +92,6 @@ const generatePDF = () => {
 const Header = (props) => {
   const [editFormOpen, setEditFormOpen] = useState(false);
   const [aproposDeMoi, setAproposDeMoi] = useState(props.header.propos);
-  const [selectedProfilePicture, setSelectedProfilePicture] = useState(null);
 
   const token = GetCookie('jwt');
 
@@ -129,27 +128,6 @@ const Header = (props) => {
     setEditFormOpen(false);
   };
 
-  const handleProfilePictureChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setSelectedProfilePicture(file);
-    }
-  };
-
-  const handleSaveProfilePicture = async () => {
-    try {
-      const id = props.header.id;
-      const formData = new FormData();
-      formData.append('profile_picture', selectedProfilePicture);
-
-      await updateProfilePicture(id, formData, token);
-      console.log('Profile picture updated successfully');
-    } catch (error) {
-      console.log(error);
-    }
-    setEditFormOpen(false);
-  };
-
   const header = props.header;
   return (
     <div>
@@ -163,24 +141,7 @@ const Header = (props) => {
                 height="200"
                 alt="pic"
               />
-              <label htmlFor="profilePictureInput">
-                <IconButton component="span" className="edit-profile-picture-icon">
-                  <StyledPhotoCameraIcon />
-                </IconButton>
-              </label>
-              <input
-                type="file"
-                accept="image/*"
-                id="profilePictureInput"
-                style={{ display: "none" }}
-                onChange={handleProfilePictureChange}
-              />
             </div>
-            {selectedProfilePicture && (
-              <div>
-                <Button onClick={handleSaveProfilePicture}>Save Profile Picture</Button>
-              </div>
-            )}
           </div>
 
           <div className="col-lg-8 col-md-7 text-center text-md-start">

@@ -1,0 +1,52 @@
+/* CustomDataTable.css */
+.datatable-container {
+    /* Add your custom styles here */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200vh;
+  }
+  
+  .datatable-wrapper {
+    /* Add your custom styles here */
+    width: 1500px; /* Set the desired width */
+  }
+  
+
+  
+  .custom-datatable {
+    /* Add your custom DataTable styles here */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .custom-datatable table {
+    /* Modify the table styles */
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .custom-datatable table th {
+    /* Modify the table header styles */
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  .custom-datatable table td {
+    /* Modify the table cell styles */
+    padding: 8px;
+  }
+  
+  .custom-datatable table tr:nth-child(even) {
+    /* Modify the alternate row styles */
+    background-color: #f9f9f9;
+  }
+  
+  .custom-datatable table tr:hover {
+    /* Modify the hover row styles */
+    background-color: #e6e6e6;
+    color: #fff; /* Change the text color */
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a box shadow */
+  }

@@ -32,7 +32,7 @@ const Stagiaire = () => {
           formations: data.stagiaire.formations,
           experiences: data.stagiaire.experiences.map((experience) => ({
             ...experience,
-            missions: JSON.parse(experience.missions),
+            missions: experience.missions ? JSON.parse(experience.missions) : [],
           })),
         });
       })
