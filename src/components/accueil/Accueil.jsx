@@ -1,7 +1,7 @@
 import React from 'react'
 import Welcome from '../../features/auth/Welcome'
-import Right from '../right/right'
-import Main from './main/Main'
+import Right from './right/right'
+import Main from './main/main'
 
 const Accueil = () => {
   return (

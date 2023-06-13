@@ -144,6 +144,9 @@ main {
     font-weight: 600;
     transition: 0.4s;
 }
+.css-r47a1p-MuiFormControl-root{
+    margin-left: 0 !important;
+}
 
 .label_login {
     position: absolute;

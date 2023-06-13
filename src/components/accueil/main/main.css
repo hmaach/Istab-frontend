@@ -179,6 +179,13 @@
   text-decoration: none;
 }
 
+.main-post-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  width: 95%;
+  align-items: center;
+}
 
 .margin-left {
   margin-left: 20px;
@@ -239,6 +246,7 @@
 #tweet-box {
   min-height: 40px;
   border-radius: 10px;
+  background-color: white;
   margin-bottom: 8px;
   width: 95%;
   overflow: hidden;
@@ -248,7 +256,11 @@
   flex-direction: column;
   padding: 5px;
 }
-.addPost{
+.main-no-posts{
+  margin-top: 1rem;
+  color: var(--color-text-light);
+}
+.addPost {
   min-height: 40px;
   border-radius: 10px;
   margin-bottom: 8px;
@@ -331,11 +343,13 @@
   color: red;
   /* font-weight: bolder; */
 }
-.publieur{
+
+.publieur {
   margin-top: 15px;
   display: flex;
   gap: 10px;
 }
+
 #post-box {
   display: flex;
   /* justify-content: flex-end; */
@@ -344,14 +358,16 @@
   padding: 8px;
   margin: 8px;
 }
-.div_get_more{
+
+.div_get_more {
   /* border: 1px red solid ; */
   margin-bottom: 1rem;
   display: flex;
   justify-content: center;
   width: 95%;
 }
-.get_more{
+
+.get_more {
   border: var(--color-primary) solid 2px;
   border-radius: 20px;
   color: var(--color-primary);
@@ -361,7 +377,8 @@
   transition: var(--transition);
   font-weight: 600;
 }
-.get_more:hover{
+
+.get_more:hover {
   box-shadow: 1px 1px 4px var(--color-primary);
   border-radius: 20px;
   color: var(--color-primary);
@@ -462,12 +479,15 @@
   background: rgb(253, 222, 222);
   color: rgb(255, 72, 72);
 }
-.like_no_hover{
+
+.like_no_hover {
   color: rgb(95, 95, 95) !important;
 }
-.like_no_hover:hover{
+
+.like_no_hover:hover {
   color: rgb(95, 95, 95) !important;
 }
+
 #text-tweet {
   width: 100%;
   text-align: left;

@@ -10,7 +10,7 @@ import {
   MenuItem,
   Select
 } from "@mui/material";
-import GetCookie from "../../../cookies/JWT/GetCookie";
+import GetCookie from "../../../../cookies/JWT/GetCookie";
 import { useDispatch } from "react-redux";
 
 
@@ -128,7 +128,7 @@ const UpdatePostAlert = (props) => {
                   >
                     <MenuItem value="announce">Announce</MenuItem>
                     <MenuItem value="cour">Cour</MenuItem>
-                    <MenuItem value="exercise">Exercice</MenuItem>
+                    <MenuItem value="exercice">Exercice</MenuItem>
                   </Select>
                 </FormControl>
               </li>

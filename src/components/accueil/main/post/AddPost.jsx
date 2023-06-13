@@ -136,6 +136,7 @@ export default function SimpleAccordion({ filieres, onSubmit, user }) {
         setPdf_archive_categorie(false);
         setPdf_file(null)
         setLibelle_pdf(null)
+        setImgs([]);
     };
 
     return (
@@ -292,7 +293,7 @@ export default function SimpleAccordion({ filieres, onSubmit, user }) {
                                         >
                                             <MenuItem value="announce">Announce</MenuItem>
                                             <MenuItem value="cour">Cour</MenuItem>
-                                            <MenuItem value="exercise">Exercice</MenuItem>
+                                            <MenuItem value="exercice">Exercice</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </li>

@@ -4,7 +4,7 @@ import SearchMain from './main/SearchMain';
 import { useSelector } from 'react-redux';
 import { selectSearchData } from '../../features/search/searchSlice';
 import { useState } from 'react';
-import Right from '../right/right';
+import Right from './right/right';
 
 const SearchAccueil = () => {
   const dataSearch = useSelector(selectSearchData)  

@@ -4,9 +4,9 @@ import AccountMight from "./accountMight/accountMight";
 import { Link } from "react-router-dom";
 import NotificationSide from "./notifications/NotificationSide";
 import axios from "axios";
-import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
 import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
+// import MiniCalendrier from "../calendrier/MiniCalendrier";
 
 const Right = () => {
   const [notifs, setNotifs] = useState([])
@@ -43,10 +43,10 @@ const Right = () => {
   };
 
   useEffect(() => {
-    fetchNotifs();
+    // fetchNotifs();
     fetchRandomStagiaires();
     const interval = setInterval(() => {
-      fetchNotifs();
+      // fetchNotifs();
     }, 5 * 60 * 1000);
     return () => clearInterval(interval);
   }, [])
@@ -82,6 +82,7 @@ const Right = () => {
           </div>
         </div>
       }
+      {/* <MiniCalendrier/> */}
       {stagiaires &&
         <div id="might-like-box">
           <h2 id="title-might">Découvrez les stagiaires</h2>

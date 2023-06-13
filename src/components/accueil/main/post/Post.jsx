@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useSelector } from 'react-redux';
-import { selectCurrentUser } from "../../../features/auth/authSlice";
-import GetCookie from "../../../cookies/JWT/GetCookie";
 import axios from "axios";
 import CustomizedMenus from "./CustomizedMenus";
 import { formatDistanceToNow } from 'date-fns';
@@ -14,6 +12,9 @@ import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import { Avatar, Badge } from "@mui/material";
+import { selectCurrentUser } from "../../../../features/auth/authSlice";
+import { downloadPDF } from "../../../../app/api/pdfAxios";
+import GetCookie from "../../../../cookies/JWT/GetCookie";
 
 const Post = (props, { setPosts }) => {
 
@@ -23,25 +24,10 @@ const Post = (props, { setPosts }) => {
     const user = useSelector(selectCurrentUser)
 
 
-    const images = post.images.map((image) => ({
+    const images = post?.images.map((image) => ({
         original: image,
         thumbnail: image,
     }));
-    // console.log(images);
-    // const images = [
-    //     {
-    //         original: 'post/img1.png',
-    //         thumbnail: 'post/img1.png',
-    //     },
-    //     {
-    //         original: 'post/img2.jpg',
-    //         thumbnail: 'post/img2.jpg',
-    //     },
-    //     {
-    //         original: 'post/img3.jpg',
-    //         thumbnail: 'post/img3.jpg',
-    //     },
-    // ];
 
     const [showFullContent, setShowFullContent] = useState(false);
 
@@ -75,19 +61,15 @@ const Post = (props, { setPosts }) => {
             })
             .catch((error) => console.log(error));
     };
-    // console.log(post);
     const handleUpdateCallback = () => {
         handleUpdate()
     };
 
+
     const handleDownloadPDF = (pdfPath) => {
-        axios({
-            url: `http://127.0.0.1:8000/api/downloadpdf?pdf_path=${pdfPath}`,
-            method: 'GET',
-            responseType: 'blob',
-        })
+        downloadPDF(pdfPath)
             .then((response) => {
-                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const url = window.URL.createObjectURL(new Blob([response]));
                 const link = document.createElement('a');
                 link.href = url;
                 link.setAttribute('download', 'istab.pdf');
@@ -220,7 +202,7 @@ const Post = (props, { setPosts }) => {
                     <img className="img_post_pub" src="/post_test.jpg" />
                 </div>
             )} */}
-            {post.images.length>0
+            {post?.images.length>0
             // !post.pdf_path 
             &&
                 <div className="image_post">

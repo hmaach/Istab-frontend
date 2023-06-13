@@ -5,12 +5,18 @@ import { BiHomeCircle } from "react-icons/bi";
 import { HiDocumentDuplicate } from "react-icons/hi"
 import { CgProfile } from "react-icons/cg";
 import { IoIosPeople } from "react-icons/io";
-import { NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
+import PersonIcon from '@mui/icons-material/Person';
+
 import Logo from "./Logo";
 import User from "./User";
 import Logo2 from "./Logo2";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../features/auth/authSlice";
+import { Button } from "@mui/material";
 
 const NavBar = () => {
+  const user = useSelector(selectCurrentUser)
   const location = useLocation();
   if (location.pathname === '/login') {
     return null;
@@ -45,7 +51,22 @@ const NavBar = () => {
           </p>
         </NavLink>
       </div>
-      <User />
+      <div id="bottom-nav">
+      {!user ?
+        <Link to='/login' style={{margin:"auto"}}>
+          <Button
+            variant="contained"
+            size="small"
+            endIcon={<PersonIcon />}
+            style={{
+              borderRadius: '20px',
+            }}
+          >Connexion</Button>
+        </Link>
+        :
+        <User />
+      }
+      </div>
     </div>
   );
 };

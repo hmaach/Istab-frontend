@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentUser, setCredentials } from '../../features/auth/authSlice';
 import Search from './Search';
+import { Button } from '@mui/material';
 
 const Header = () => {
     const user = useSelector(selectCurrentUser)
@@ -21,10 +22,17 @@ const Header = () => {
     }, [dispatch])
     return (
         <div className='container'>
-            <Search />
-            {!user &&
-                <Link className='login-button' to='/login'>Connexion</Link>
-            }
+            {/* <Search /> */}
+            {/* {!user &&
+                <Link  to='/login'>
+                    <Button 
+                        variant="contained"
+                        style={{
+                            borderRadius: '20px',
+                        }}
+                    >Connexion</Button>
+                </Link>
+            } */}
         </div>
     )
 }

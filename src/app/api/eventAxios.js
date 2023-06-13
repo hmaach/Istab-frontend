@@ -1,29 +1,15 @@
 import api from './baseURL'
 
-export const getPublicPosts = async (type, q = null, token = null, page = null) => {
+export const getEvents = async (token = null) => {
     try {
-        const params = {};
-        if (page) {
-            params.page = page;
-        }
-        if (type) {
-            params.type = type;
-        }
-        if (q) {
-            params.q = q;
-        }
-        
         if (token) {
             const headers = { Authorization: `Bearer ${token}` };
-            const response = await api.get('/poste', {
-                params,
+            const response = await api.get('/events', {
                 headers
             });
             return response.data;
         } else {
-            const response = await api.get('/postespublic', {
-                params
-            });
+            const response = await api.get('/eventspublic');
             return response.data;
         }
     } catch (error) {
@@ -31,13 +17,12 @@ export const getPublicPosts = async (type, q = null, token = null, page = null) 
     }
 };
 
-
 export const PosterPost = async (post, token) => {
     try {
-        const headers = {
+        const headers = { 
             Authorization: `Bearer ${token}`,
             'Content-Type': 'multipart/form-data'
-        };
+         };
         const response = await api.post('/poste', post, {
             headers
         });

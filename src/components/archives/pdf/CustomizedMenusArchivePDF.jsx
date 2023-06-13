@@ -7,23 +7,17 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeselectIcon from '@mui/icons-material/Deselect';
 import { CgMoreAlt } from 'react-icons/cg';
 import { Delete } from '@mui/icons-material';
-import GetCookie from '../../../cookies/JWT/GetCookie';
 import Slide from '@mui/material/Slide';
+import GetCookie from '../../../cookies/JWT/GetCookie';
 
-export default function CustomizedMenus({ post, setPosts, user, handleUpdateCallback, onSubmit, handleUpdateCallback2 }) {
+export default function CustomizedMenusArchivePDF({ user, pdf, handleUpdateCallback,onDelete }) {
 
 
-
-    const handleUpdate = () => {
-
-        handleUpdateCallback();
-    };
 
     const token = GetCookie('jwt');
     const [anchorEl, setAnchorEl] = useState(null);
     const [openDialog, setOpenDialog] = useState(false);
     const [err, setErr] = useState();
-    const [postTypeModif, setPostTypeModif] = useState(post.type);
 
     const open = Boolean(anchorEl);
 
@@ -35,19 +29,26 @@ export default function CustomizedMenus({ post, setPosts, user, handleUpdateCall
         setAnchorEl(null);
     };
 
+
     const handleClickOpen = () => {
         setAnchorEl(null);
         setOpenDialog(true);
     };
 
-    const handleDelete = () => {
-        onSubmit(post);
-        setAnchorEl(null);
+    const handleUpdate = () => {
+        handleClose()
+        handleUpdateCallback()
+    };
+
+    const handleDelete = (PdfId) => {
+        handleClose()
+        onDelete(PdfId)
     };
 
     return (
-        <div>
+        <div className="menu-cell">
             <Button
+                className="menu-cell"
                 id="demo-customized-button"
                 aria-controls={open ? 'demo-customized-menu' : undefined}
                 aria-haspopup="true"
@@ -64,37 +65,24 @@ export default function CustomizedMenus({ post, setPosts, user, handleUpdateCall
                 open={open}
                 onClose={handleClose}
             >
-                {user.id === post.user_id && (
-                    <MenuItem onClick={handleUpdate} disableRipple>
-                        <EditIcon />
-                        Modifier
-                    </MenuItem>
-                )}
-                {post.type === 'announce' && (
-                    <MenuItem onClick={handleClose} disableRipple>
-                        <DeselectIcon />
-                        Annuler
-                    </MenuItem>
-                )}
-                {user.role === 'admin' || user.id === post.user_id ? (
-                    <MenuItem onClick={handleDelete} disableRipple>
-                        <Delete />
-                        Supprimer
-                    </MenuItem>
-                ) : null}
+                {/* {user.id === post.user_id && ( */}
+                <MenuItem className="menu-cell" onClick={handleUpdate} disableRipple>
+                    <EditIcon />
+                    Modifier
+                </MenuItem>
+                {/* )} */}
+                {/* {user.role === 'admin' || user.id === post.user_id ? ( */}
+                <MenuItem className="menu-cell" onClick={()=>handleDelete(pdf.id)} disableRipple>
+                    <Delete />
+                    Supprimer
+                </MenuItem>
+                {/* ) : null} */}
             </StyledMenu>
         </div>
     );
 }
 
 
-{/* <AlertDialogSlide
-    post={post}
-    open={openDialog}
-    handleClose={() => setOpenDialog(false)}
-    handleUpdatePost={handleUpdatePost}
-    postType={postTypeModif}
-/> */}
 const StyledMenu = styled((props) => (
     <Menu
         elevation={0}

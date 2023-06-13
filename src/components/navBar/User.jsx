@@ -52,7 +52,7 @@ const User = () => {
     let nom = user.nom
     let prenom = user.prenom
     return (
-      <div id="bottom-nav">
+      <div style={{display:"flex",justifyContent:"space-around",width:"100%"}}>
         <span id="user-box">
           {user.profile
             ? <img

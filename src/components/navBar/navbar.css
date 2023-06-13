@@ -11,7 +11,9 @@
   /* justify-content: space-between; */
   position: fixed;
 }
-
+.logo_nav{
+  background-color: white;
+}
 #nav-box {
   width: 20%;
   /* border: 1px solid red; */
@@ -20,7 +22,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  z-index: 5;
+  z-index: 7;
 }
 
 #nav-up {
@@ -45,6 +47,7 @@
 .logo {
   cursor: pointer;
   display: inline-flex;
+  background-color: white !important;
   margin: 1rem 0 2rem 0;
   /* justify-self: center; */
   /* float: center; */

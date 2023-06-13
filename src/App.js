@@ -18,6 +18,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Profile from './components/profile/Profile';
 import Archives from './components/archives/Archives';
+import Calendar from './components/calandar/Calandar';
 const { localStorage } = window;
 
 const App = () => {
@@ -64,11 +65,14 @@ const App = () => {
           <Route path='/stagiaires' element={<Stagiaires />} />
           <Route path='/stagiaire' element={<Stagiaire />} />
 
+          <Route path='/archives' element={<Archives />} />
+          <Route path='/calendrier' element={<Calendrier />} />
+
+          <Route path='/c' element={<Calendar />} />
+
           {/* protected routes (require login) */}
           <Route element={<RequireAuth />}>
-            <Route path='/calendrier' element={<Calendrier />} />
             <Route path='/profile' element={<Profile />} />
-            <Route path='/archives' element={<Archives />} />
           </Route>
 
           {/* admin routes */}
