@@ -44,7 +44,8 @@
     "react-toastify": "^9.1.3",
     "react-twitter-embed": "^4.0.4",
     "universal-cookie": "^4.0.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "xlsx": "^0.18.5"
   },
   "scripts": {
     "start": "react-scripts start",
