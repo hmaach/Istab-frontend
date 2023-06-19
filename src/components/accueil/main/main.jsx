@@ -1,33 +1,44 @@
 import React, { useEffect, useState } from "react";
-import { getPublicPosts, PosterPost, SupprimerPost, UpdatePost } from "../../../app/api/postAxios";
+import {
+  getPublicPosts,
+  PosterPost,
+  SupprimerPost,
+  UpdatePost,
+} from "../../../app/api/postAxios";
 import { selectCurrentUser } from "../../../features/auth/authSlice";
 import LoadingSpinner from "../../loadingSpinner/LoadingSpinner";
 import { useDispatch, useSelector } from "react-redux";
 import GetCookie from "../../../cookies/JWT/GetCookie";
 import UpdatePostAlert from "./post/UpdatePostAlert";
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from "@mui/icons-material/Search";
 import { toast } from "react-toastify";
 import AddPost from "./post/AddPost";
-import { debounce } from 'lodash';
+import { debounce } from "lodash";
 import Post from "./post/Post";
 import "./main.css";
-import { Button, ButtonGroup, CircularProgress, InputAdornment, TextField } from "@mui/material";
+import {
+  Button,
+  ButtonGroup,
+  CircularProgress,
+  InputAdornment,
+  TextField,
+} from "@mui/material";
 
 const Main = () => {
   const [posts, setPosts] = useState([]);
   const [filieres, setFilieres] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(1);
   const [err, setErr] = useState();
   const curUser = useSelector(selectCurrentUser);
   const token = GetCookie("jwt");
-  const [activeButton, setActiveButton] = useState("all")
+  const [activeButton, setActiveButton] = useState("all");
   const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState("");
   const [showUpdateAlert, setShowUpdateAlert] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
-
+  const [refetch, setRefetch] = useState(false);
 
   const fetchPosts = async (get = null) => {
     try {
@@ -37,7 +48,7 @@ const Main = () => {
             if (get) {
               setPosts((prevPosts) => [...prevPosts, ...data?.postes]);
             } else {
-              setPosts(data?.postes)
+              setPosts(data?.postes);
             }
             setFilieres(data.filieres);
           }
@@ -54,16 +65,15 @@ const Main = () => {
   };
 
   const fetchMorePosts = async () => {
-    setIsLoadingMore(true)
+    setIsLoadingMore(true);
     try {
       getPublicPosts(activeButton, null, token, page + 1)
         .then((data) => {
           if (data) {
             setPosts((prevPosts) => [...prevPosts, ...data.postes]);
-            setPage(page + 1)
+            setPage(page + 1);
           }
-          setIsLoadingMore(false)
-
+          setIsLoadingMore(false);
         })
         .catch((error) => {
           setErr(error);
@@ -72,7 +82,7 @@ const Main = () => {
       setErr(error);
       console.log(err);
     }
-  }
+  };
 
   const handlePosterPost = (post) => {
     PosterPost(post, token)
@@ -89,18 +99,18 @@ const Main = () => {
             role: curUser.role,
             reacts: 0,
             pdf_path: data.pdf_path,
-            created_at: new Date().toLocaleString('en-US', {
-              year: 'numeric',
-              month: '2-digit',
-              day: '2-digit',
-              hour: '2-digit',
-              minute: '2-digit',
+            created_at: new Date().toLocaleString("en-US", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+              hour: "2-digit",
+              minute: "2-digit",
             }),
           };
-
+          setRefetch(!refetch);
           setPosts((prevPosts) => [post, ...prevPosts]);
 
-          toast.success('Publié avec succès', {
+          toast.success("Publié avec succès", {
             position: "top-center",
             autoClose: 4000,
             hideProgressBar: false,
@@ -135,9 +145,11 @@ const Main = () => {
 
         if (data.message === "success") {
           setPosts((prevPosts) =>
-            prevPosts.map((post) => (post.id === updatedPost.id ? updatedPost : post))
+            prevPosts.map((post) =>
+              post.id === updatedPost.id ? updatedPost : post
+            )
           );
-          toast.success('Modifié avec succès', {
+          toast.success("Modifié avec succès", {
             position: "top-center",
             autoClose: 4000,
             hideProgressBar: false,
@@ -147,6 +159,7 @@ const Main = () => {
             progress: undefined,
             theme: "light",
           });
+          setRefetch(!refetch);
         }
       })
       .catch((error) => {
@@ -166,42 +179,45 @@ const Main = () => {
   };
 
   const handleDeletePost = (deletedPost) => {
-    if (deletedPost.user_id === curUser.id || curUser.role === 'admin') {
+    if (deletedPost.user_id === curUser.id || curUser.role === "admin") {
       SupprimerPost(deletedPost.id, token)
         .then((data) => {
           console.log(data.message);
-          if (data.message === 'success') {
-            setPosts(prevPosts => prevPosts.filter(p => p.id !== deletedPost.id));
-            toast.success('Supprimé avec succès', {
-              position: 'top-center',
+          if (data.message === "success") {
+            setPosts((prevPosts) =>
+              prevPosts.filter((p) => p.id !== deletedPost.id)
+            );
+            toast.success("Supprimé avec succès", {
+              position: "top-center",
               autoClose: 4000,
               hideProgressBar: false,
               closeOnClick: true,
               pauseOnHover: true,
               draggable: true,
               progress: undefined,
-              theme: 'light',
+              theme: "light",
             });
+            setRefetch(!refetch);
           }
         })
         .catch((error) => {
           setErr(error);
           console.log(err);
           toast.error(err, {
-            position: 'top-center',
+            position: "top-center",
             autoClose: 4000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
             progress: undefined,
-            theme: 'light',
+            theme: "light",
           });
         });
     } else {
       console.log("Vous n'avez pas le droit d'effacer ce poste");
     }
-  }
+  };
 
   const handleUpdateCallback2 = (post) => {
     setSelectedPost(post);
@@ -213,13 +229,13 @@ const Main = () => {
   };
 
   const handleSearch = (e) => {
-    setSearchValue(e.target.value)
-  }
+    setSearchValue(e.target.value);
+  };
 
   useEffect(() => {
-    setIsLoading(true)
+    setIsLoading(true);
     fetchPosts(false);
-  }, [activeButton]);
+  }, [activeButton, refetch]);
 
   useEffect(() => {
     const fetchData = async (loading = null) => {
@@ -261,35 +277,43 @@ const Main = () => {
           <div className="main-post-filter">
             <ButtonGroup
               disableElevation
-              style={{ borderRadius: '10px' }}
+              style={{ borderRadius: "10px" }}
               aria-label="Disabled elevation buttons"
             >
               <Button
                 size="small"
-                style={{ borderRadius: '20px 0 0 20px' }}
+                style={{ borderRadius: "20px 0 0 20px" }}
                 variant={activeButton === "all" ? "contained" : "outlined"}
                 onClick={() => setActiveButton("all")}
-              >Tous</Button>
+              >
+                Tous
+              </Button>
               <Button
                 size="small"
                 variant={activeButton === "announce" ? "contained" : "outlined"}
                 onClick={() => setActiveButton("announce")}
-              >Announces</Button>
+              >
+                Announces
+              </Button>
               <Button
                 size="small"
                 variant={activeButton === "cour" ? "contained" : "outlined"}
                 onClick={() => setActiveButton("cour")}
-              >Cours</Button>
+              >
+                Cours
+              </Button>
               <Button
                 size="small"
                 variant={activeButton === "exercice" ? "contained" : "outlined"}
                 onClick={() => setActiveButton("exercice")}
-                style={{ borderRadius: ' 0 20px  20px 0' }}
-              >Exercices</Button>
+                style={{ borderRadius: " 0 20px  20px 0" }}
+              >
+                Exercices
+              </Button>
             </ButtonGroup>
           </div>
           <TextField
-            className='main-post-search'
+            className="main-post-search"
             value={searchValue}
             onChange={handleSearch}
             size="small"
@@ -297,16 +321,15 @@ const Main = () => {
             label="Chercher publications..."
             type="search"
             InputProps={{
-              style: { borderRadius: '20px' },
+              style: { borderRadius: "20px" },
               endAdornment: (
                 <InputAdornment position="end">
                   <SearchIcon />
                 </InputAdornment>
-              )
+              ),
             }}
-
             sx={{
-              color: '#1DA1F2',
+              color: "#1DA1F2",
             }}
           />
         </div>
@@ -336,41 +359,37 @@ const Main = () => {
               <div className="div_get_more">
                 {isLoadingMore ? (
                   <CircularProgress />
+                ) : posts.length !== 0 ? (
+                  <Button
+                    onClick={fetchMorePosts}
+                    variant="outlined"
+                    style={{
+                      borderRadius: "20px",
+                      marginTop: "0.5rem",
+                    }}
+                  >
+                    Avoir plus
+                  </Button>
                 ) : (
-                  posts.length !== 0 ? (
-                    <Button
-                      onClick={fetchMorePosts}
-                      variant="outlined"
-                      style={{
-                        borderRadius: '20px',
-                        marginTop: '0.5rem'
-                      }}
-                    >
-                      Avoir plus
-                    </Button>
-                  ) : (
-                    <span className="main-no-posts">Aucune publication trouvée !</span>
-                  )
+                  <span className="main-no-posts">
+                    Aucune publication trouvée !
+                  </span>
                 )}
               </div>
             )}
           </>
+        )}
 
-        )
-        }
-
-        {
-          showUpdateAlert && (
-            <UpdatePostAlert
-              onSubmit={handleUpdatePost}
-              post={selectedPost}
-              open={true}
-              filieres={filieres}
-              handleClose={handleClose}
-            />
-          )
-        }
-      </div >
+        {showUpdateAlert && (
+          <UpdatePostAlert
+            onSubmit={handleUpdatePost}
+            post={selectedPost}
+            open={true}
+            filieres={filieres}
+            handleClose={handleClose}
+          />
+        )}
+      </div>
     );
   } else {
     return null;

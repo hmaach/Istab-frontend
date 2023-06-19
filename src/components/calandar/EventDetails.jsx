@@ -47,13 +47,13 @@ const EventDetails = (props) => {
   const token = GetCookie("jwt");
   const filieres = useSelector(selectFiliereSlice);
   const user = useSelector(selectCurrentUser);
-  
+
   const handleDeleteClick = () => {
     deleteEvent(eventId, token)
       .then((data) => {
         if (data.message === "success") {
           console.log(data.message);
-          toast.success("Publié avec succès", {
+          toast.success("Supprimé avec succès", {
             position: "top-center",
             autoClose: 4000,
             hideProgressBar: false,
@@ -89,7 +89,7 @@ const EventDetails = (props) => {
       .then((data) => {
         if (data.message === "success") {
           console.log(data.message);
-          toast.success("Publié avec succès", {
+          toast.success("Annuler avec succès", {
             position: "top-center",
             autoClose: 4000,
             hideProgressBar: false,
@@ -127,7 +127,7 @@ const EventDetails = (props) => {
       .then((data) => {
         if (data.message === "success") {
           console.log(data.message);
-          toast.success("Publié avec succès", {
+          toast.success("Restauré avec succès", {
             position: "top-center",
             autoClose: 4000,
             hideProgressBar: false,
@@ -231,7 +231,7 @@ const EventDetails = (props) => {
       .then((data) => {
         console.log(data.message);
         if (data.message === "success") {
-          toast.success("Publié avec succès", {
+          toast.success("Enregistré avec succès", {
             position: "top-center",
             autoClose: 4000,
             hideProgressBar: false,
