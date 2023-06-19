@@ -129,3 +129,72 @@ export const addCompetences = async (userId, request) => {
 
 
 
+export const updateExperience = async (userId, experienceId, request) => {
+  try {
+    const response = await api.put(`/stagiaires/${userId}/experiences/${experienceId}`, request);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const addExperience = async (experience) => {
+  try {
+    const { userId, titre, dateDeb, dateFin, mission } = experience;
+    const response = await api.post(`/stagiaires/${userId}/experiences`, {
+      titre,
+      dateDeb,
+      dateFin,
+      mission
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const addFormation = async (id, request, token) => {
+  try {
+    const headers = { Authorization: `Bearer ${token}` };
+    const response = await api.post(`/formations/${id}`, request, { headers });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const updateFormation = async (id, formationId, request, token) => {
+  try {
+    const headers = { Authorization: `Bearer ${token}` };
+    const response = await api.put(`/formations/${id}/${formationId}`, request, { headers });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const addInteret = async (id, request, token) => {
+  try {
+    const headers = { Authorization: `Bearer ${token}` };
+    const response = await api.post(`/stagiaire/${id}/interets`, request, { headers });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const updateInteret = async (id, interetId, request, token) => {
+  try {
+    const headers = { Authorization: `Bearer ${token}` };
+    const response = await api.put(`/stagiaire/${id}/interets/${interetId}`, request, { headers });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

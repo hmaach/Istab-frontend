@@ -9,6 +9,8 @@ import {
   TextField,
 } from '@mui/material';
 import { styled } from '@mui/system';
+import GetCookie from '../../../cookies/JWT/GetCookie';
+import { updateFormation } from '../../../app/api/stagiaireAxios';
 
 const StyledEditButton = styled(Button)`
   font-size: 16px;
@@ -25,6 +27,9 @@ const Formation = ({ formation }) => {
   const [titre, setTitre] = useState(formation.titre);
   const [institut, setInstitut] = useState(formation.institut);
   const [dateFin, setDateFin] = useState(formation.dateFin);
+  const token = GetCookie('jwt');
+
+  console.log('User IDff:', formation.user_id);
 
   const handleEditFormOpen = () => {
     setTitre(formation.titre);
@@ -51,13 +56,23 @@ const Formation = ({ formation }) => {
 
   const handleSaveFormation = async () => {
     try {
-      // Update the formation values in the state or perform other necessary actions
-      console.log('Formation updated successfully');
+      const updatedFormation = {
+        titre: titre,
+        institut: institut,
+        dateFin: dateFin
+      };
+  
+
+      const response = await updateFormation(formation.user_id, formation.id, updatedFormation, token);
+      console.log('Formation updated successfully', response);
+
+  
     } catch (error) {
       console.log(error);
     }
     setEditFormOpen(false);
   };
+  
 
   return (
     <div className="timeline-card timeline-card-success card shadow-sm">
@@ -99,6 +114,10 @@ const Formation = ({ formation }) => {
               label="Date de fin"
               variant="outlined"
               fullWidth
+              type="date"
+              InputLabelProps={{
+                shrink: true,
+              }}
               value={dateFin}
               onChange={handleDateFinChange}
             />
