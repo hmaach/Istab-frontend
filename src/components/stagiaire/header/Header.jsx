@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { updateCv ,addPropos  } from '../../../app/api/stagiaireAxios';
-import GetCookie from '../../../cookies/JWT/GetCookie';
-import './header.css';
-import Profile from '../assets/ayadi_oussama.png';
-import Stagiaire from '../Stagiaire';
-import { Edit as EditIcon, Add as AddIcon, PhotoCamera as PhotoCameraIcon } from '@mui/icons-material';
+import React, { useState, useEffect } from "react";
+import { updateCv, addPropos } from "../../../app/api/stagiaireAxios";
+import GetCookie from "../../../cookies/JWT/GetCookie";
+import "./header.css";
+import Profile from "../assets/ayadi_oussama.png";
+import Stagiaire from "../Stagiaire";
+import {
+  Edit as EditIcon,
+  Add as AddIcon,
+  PhotoCamera as PhotoCameraIcon,
+} from "@mui/icons-material";
 import {
   Button,
   Dialog,
@@ -13,8 +17,9 @@ import {
   DialogTitle,
   IconButton,
   TextField,
-} from '@mui/material';
-import { styled } from '@mui/system';
+} from "@mui/material";
+import { styled } from "@mui/system";
+import { downloadCV } from "../../../app/api/cvPdfAxios";
 
 const StyledEditIcon = styled(EditIcon)`
   font-size: 24px;
@@ -52,16 +57,17 @@ const StyledPhotoCameraIcon = styled(PhotoCameraIcon)`
   }
 `;
 
-
 const Header = (props) => {
   const [editFormOpen, setEditFormOpen] = useState(false);
   const [aproposDeMoi, setAproposDeMoi] = useState(props.header.propos);
   const [age, setAge] = useState(props.header.age);
+  const [id, setId] = useState(props.header.id);
+  // console.log(props.header.id);
   useEffect(() => {
     setAproposDeMoi(props.header.propos);
     setAge(props.header.age); // Update the value when the prop changes
   }, [props.header.propos, props.header.age]);
-  const token = GetCookie('jwt');
+  const token = GetCookie("jwt");
 
   useEffect(() => {
     setAproposDeMoi(props.header.propos); // Update the value when the prop changes
@@ -76,6 +82,26 @@ const Header = (props) => {
     setEditFormOpen(false);
   };
 
+  const handleDownload = async (id) => {
+    // try {
+    //   const cvBlob = await downloadCV(id);
+    // } catch (error) {
+    //   console.error('Error:', error.message);
+    // }
+    downloadCV(id)
+      .then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", `${props.header.nom}_${props.header.prenom}.pdf`);
+        document.body.appendChild(link);
+        link.click();
+      })
+      .catch((error) => {
+        console.error("Error downloading PDF:", error);
+      });
+  };
+
   const handleAproposDeMoiChange = (event) => {
     setAproposDeMoi(event.target.value);
   };
@@ -84,14 +110,14 @@ const Header = (props) => {
     try {
       const id = props.header.id;
       const data = { propos: aproposDeMoi };
-  
+
       await Promise.all([
         updateCv(id, data, token),
-        addPropos(id, data, token)
+        addPropos(id, data, token),
       ]);
-  
-      console.log('CV updated successfully');
-      console.log('A propos de moi added successfully');
+
+      console.log("CV updated successfully");
+      console.log("A propos de moi added successfully");
 
       setAproposDeMoi(data.propos);
       window.location.reload();
@@ -124,10 +150,14 @@ const Header = (props) => {
             <p data-aos="fade-left" data-aos-delay="100">
               {header.filiere}
             </p>
-            <div className="d-print-none" data-aos="fade-left" data-aos-delay="200">
+            <div
+              className="d-print-none"
+              data-aos="fade-left"
+              data-aos-delay="200"
+            >
               <Button
+                onClick={() => handleDownload(props.header.id)}
                 className="btn btn-light text-dark shadow-sm mt-1 me-1"
-               
               >
                 CV sous forme PDF
               </Button>
@@ -142,7 +172,11 @@ const Header = (props) => {
               <h2 className="h3 mb-3">
                 A propos de moi
                 {header.propos && (
-                  <IconButton aria-label="Edit" className="edit-icon" onClick={handleEditFormOpen}>
+                  <IconButton
+                    aria-label="Edit"
+                    className="edit-icon"
+                    onClick={handleEditFormOpen}
+                  >
                     <StyledEditIcon />
                   </IconButton>
                 )}
@@ -151,11 +185,19 @@ const Header = (props) => {
                 <p>{header.propos}</p>
               ) : (
                 <div className="add-icon-container">
-                  <StyledAddIcon className="add-icon" onClick={handleEditFormOpen} />
+                  <StyledAddIcon
+                    className="add-icon"
+                    onClick={handleEditFormOpen}
+                  />
                   <p className="add-text">Ce champ est vide</p>
                 </div>
               )}
-              <Dialog open={editFormOpen} onClose={handleEditFormClose} fullWidth maxWidth="sm">
+              <Dialog
+                open={editFormOpen}
+                onClose={handleEditFormClose}
+                fullWidth
+                maxWidth="sm"
+              >
                 <DialogTitle>Edit Interet</DialogTitle>
                 <DialogContent>
                   <form
@@ -226,4 +268,4 @@ const Header = (props) => {
   );
 };
 
-export default Header; 
+export default Header;
