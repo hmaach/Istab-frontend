@@ -35,10 +35,7 @@ const Stagiaire = () => {
           propos: cvData ? cvData.propos : '',
           competences: data.stagiaire.competences,
           formations: data.stagiaire.formations,
-          experiences: data.stagiaire.experiences.map((experience) => ({
-            ...experience,
-            mission: experience.mission ? [experience.mission] : [],
-          })),
+          experiences: data.stagiaire.experiences,
           
           age: age,
         });
@@ -65,12 +62,13 @@ const Stagiaire = () => {
       <hr className="d-print-none" />
       <Competences header={stagiaireData} />
       <hr className="d-print-none" />
-      <Experiences experiences={stagiaireData.experiences} />
+      <Experiences experiences={stagiaireData.experiences} userId={stagiaireData.id} />
+
 
       <hr className="d-print-none" />
-      <Formations formations={stagiaireData.formations} />
+      <Formations formations={stagiaireData.formations} userId={stagiaireData.id} />
       <hr className="d-print-none" />
-      <Interet interets={stagiaireData.interets} />
+      <Interet interets={stagiaireData.interets} userId={stagiaireData.id} />
     </div>
   );
 };
