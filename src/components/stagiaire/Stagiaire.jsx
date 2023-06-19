@@ -9,10 +9,13 @@ import Experiences from './experiences/Experiences';
 import Interet from './interet/Interet';
 import { getCv } from '../../app/api/stagiaireAxios';
 import { useParams } from 'react-router-dom';
+import { Backdrop, CircularProgress } from '@mui/material';
+
 
 const Stagiaire = () => {
   const { id } = useParams();
   const [stagiaireData, setStagiaireData] = useState({});
+  const [open, setOpen] = useState(true);
 
   useEffect(() => {
     getCv(id)
@@ -39,9 +42,11 @@ const Stagiaire = () => {
           
           age: age,
         });
+        setOpen(false)
       })
       .catch((error) => {
         console.log(error);
+        setOpen(false)
       });
   }, [id]);
 
@@ -69,6 +74,12 @@ const Stagiaire = () => {
       <Formations formations={stagiaireData.formations} userId={stagiaireData.id} />
       <hr className="d-print-none" />
       <Interet interets={stagiaireData.interets} userId={stagiaireData.id} />
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </div>
   );
 };

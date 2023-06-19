@@ -254,7 +254,7 @@ const Calendar = () => {
             selectMirror={true}
             dayMaxEvents={true}
             select={
-              user.role === "admin" || user.role === "formateur"
+              user?.role === "admin" || user?.role === "formateur"
                 ? handleDateClick
                 : null
             }

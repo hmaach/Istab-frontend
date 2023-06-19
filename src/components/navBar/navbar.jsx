@@ -8,9 +8,7 @@ import { IoIosPeople } from "react-icons/io";
 
 import { Link, NavLink, useLocation } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
-
-import { Link, NavLink, useLocation } from 'react-router-dom';
-import PersonIcon from '@mui/icons-material/Person';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 
 
@@ -54,9 +52,6 @@ const NavBar = () => {
         </NavLink>
         <NavLink to="/archives" activeclassname="active" id="row">
           <HiDocumentDuplicate id="home-icon" />
-
-          <p id="nav-title" className="bold">
-            Archives
           <p id="nav-title" className="bold">Archives</p>
         </NavLink>
         {user?.role === "stagiaire" && (
@@ -67,12 +62,6 @@ const NavBar = () => {
             </p>
           </NavLink>
         )}
-        <NavLink to="/profile" activeclassname="active" id="row">
-          <CgProfile id="home-icon" />
-          <p className="bold" id="nav-title">
-            Profile
-          </p>
-        </NavLink>
         {user?.role === "admin" && (
           <NavLink to="/admin" activeclassname="active" id="row">
             <AdminPanelSettingsIcon id="home-icon" />

@@ -3,6 +3,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } 
 import { styled } from '@mui/system';
 import Experience from './Experience';
 import { addExperience } from '../../../app/api/stagiaireAxios';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const StyledButton = styled(Button)`
   margin-top: 1rem;
@@ -86,7 +87,7 @@ const Experiences = ({ experiences, userId  }) => {
 
       <div className="add-experience-form">
         {!editFormOpen ? (
-          <StyledButton variant="contained" onClick={handleNewExperienceFormOpen}>
+          <StyledButton variant="contained" startIcon={<AddCircleIcon />} onClick={handleNewExperienceFormOpen}>
             Ajouter une expérience
           </StyledButton>
         ) : (
