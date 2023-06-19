@@ -111,11 +111,13 @@ const App = () => {
           <Route path="/calendrier" element={<Calendar />} />
           {/* <Route path="/admin/*" element={<AdminRoutes />} /> */}
 
-          {/* <Route path="/c" element={<Calendar1 />} /> */}
+
+          <Route path='/c' element={<Calendar />} />
+          <Route path='/profile/:id' element={<Stagiaire />} />
 
           {/* protected routes (require login) */}
           <Route element={<RequireAuth />}>
-            <Route path="/profile" element={<Profile />} />
+
           </Route>
 
           {/* admin routes */}

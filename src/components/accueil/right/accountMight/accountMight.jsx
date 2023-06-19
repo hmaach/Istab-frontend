@@ -36,7 +36,7 @@ const AccountMight = (props) => {
 
 
   return (
-    <Link to='/profile' id="box-account-might" key={stagiaire.id}>
+    <Link to={`/profile/${stagiaire.id}`} id="box-account-might" key={stagiaire.id}>
       <div id="container-might">
         <span id="user-boxh" style={{ display: 'flex' }}>
           {stagiaire.profile

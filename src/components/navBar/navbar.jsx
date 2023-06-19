@@ -5,9 +5,14 @@ import { BiHomeCircle } from "react-icons/bi";
 import { HiDocumentDuplicate } from "react-icons/hi";
 import { CgProfile } from "react-icons/cg";
 import { IoIosPeople } from "react-icons/io";
+
 import { Link, NavLink, useLocation } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+
+import { Link, NavLink, useLocation } from 'react-router-dom';
+import PersonIcon from '@mui/icons-material/Person';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+
 
 import Logo from "./Logo";
 import User from "./User";
@@ -49,8 +54,23 @@ const NavBar = () => {
         </NavLink>
         <NavLink to="/archives" activeclassname="active" id="row">
           <HiDocumentDuplicate id="home-icon" />
+
           <p id="nav-title" className="bold">
             Archives
+          <p id="nav-title" className="bold">Archives</p>
+        </NavLink>
+        {user?.role === "stagiaire" && (
+          <NavLink to="/admin" activeclassname="active" id="row">
+            <AssignmentIndIcon id="home-icon" />
+            <p className="bold" id="nav-title">
+              Mon cv
+            </p>
+          </NavLink>
+        )}
+        <NavLink to="/profile" activeclassname="active" id="row">
+          <CgProfile id="home-icon" />
+          <p className="bold" id="nav-title">
+            Profile
           </p>
         </NavLink>
         {user?.role === "admin" && (
