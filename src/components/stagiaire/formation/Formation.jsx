@@ -102,6 +102,8 @@ const Formation = ({ formation }) => {
               fullWidth
               value={titre}
               onChange={handleTitreChange}
+              sx={{ mt: 2 }}
+              required
             />
             <TextField
               label="Institut"
@@ -109,6 +111,8 @@ const Formation = ({ formation }) => {
               fullWidth
               value={institut}
               onChange={handleInstitutChange}
+              sx={{ mt: 2 }}
+              required
             />
             <TextField
               label="Date de fin"
@@ -120,6 +124,8 @@ const Formation = ({ formation }) => {
               }}
               value={dateFin}
               onChange={handleDateFinChange}
+              sx={{ mt: 2 }}
+              required
             />
             <DialogActions>
               <Button onClick={handleEditFormClose}>Cancel</Button>

@@ -123,6 +123,8 @@ const Experience = ({ experience }) => {
               fullWidth
               value={titre}
               onChange={handleTitreChange}
+              sx={{ mt: 2 }}
+              required
             />
             <TextField
               label="Date de début"
@@ -134,6 +136,8 @@ const Experience = ({ experience }) => {
                 shrink: true,
               }}
               onChange={handleDateDebChange}
+              sx={{ mt: 2 }}
+              required
             />
             <TextField
               label="Date de fin"
@@ -145,6 +149,8 @@ const Experience = ({ experience }) => {
                 shrink: true,
               }}
               onChange={handleDateFinChange}
+              sx={{ mt: 2 }}
+              required
             />
             <TextField
               label="Missions"
@@ -154,6 +160,8 @@ const Experience = ({ experience }) => {
               fullWidth
               value={mission}
               onChange={handleMissionsChange}
+              sx={{ mt: 2 }}
+              required
             />
             <DialogActions>
               <Button onClick={handleEditFormClose}>Cancel</Button>

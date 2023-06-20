@@ -55,7 +55,7 @@ const NavBar = () => {
           <p id="nav-title" className="bold">Archives</p>
         </NavLink>
         {user?.role === "stagiaire" && (
-          <NavLink to="/admin" activeclassname="active" id="row">
+          <NavLink to={`/profile/${user.id}`} activeclassname="active" id="row">
             <AssignmentIndIcon id="home-icon" />
             <p className="bold" id="nav-title">
               Mon cv

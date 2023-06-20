@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './competences.css';
 import { updateCompetences, addCompetences } from '../../../app/api/stagiaireAxios';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 import { Edit as EditIcon, Add as AddIcon } from '@mui/icons-material';
 import {
@@ -12,6 +13,9 @@ import {
   TextField,
 } from '@mui/material';
 import { styled } from '@mui/system';
+const StyledButton = styled(Button)`
+  margin-top: 1rem;
+`;
 
 const StyledEditButton = styled(Button)`
   font-size: 16px;
@@ -126,6 +130,8 @@ const Competences = ({ header }) => {
               fullWidth
               value={categorie}
               onChange={handleCategorieChange}
+              sx={{ mt: 2 }}
+              required
             />
             <TextField
               label="description"
@@ -134,6 +140,8 @@ const Competences = ({ header }) => {
               fullWidth
               value={description}
               onChange={handleDescriptionChange}
+              sx={{ mt: 2 }}
+              required
             />
 
             <DialogActions>
@@ -183,16 +191,18 @@ const Competences = ({ header }) => {
         ) : (
           <div className="col-md-12 d-flex justify-content-center align-items-center">
             <div className="mb-2 text-center">
-              <StyledAddIcon className="add-icon" onClick={handleAddFormOpen} />
-              <p className="add-text">Ce champ est vide</p>
+              <StyledButton variant="contained" startIcon={<AddCircleIcon />} onClick={handleAddFormOpen}>
+            Ajouter une compétence
+          </StyledButton>
             </div>
           </div>
         )}
         {competences && competences.length > 0 && (
           <div className="col-md-12 d-flex justify-content-center align-items-center">
             <div className="mb-2 text-center">
-              <StyledAddIcon className="add-icon" onClick={handleAddFormOpen} />
-              <p className="add-text">Ajouter une compétence</p>
+            <StyledButton variant="contained" startIcon={<AddCircleIcon />} onClick={handleAddFormOpen}>
+            Ajouter une compétence
+          </StyledButton>
             </div>
           </div>
         )}

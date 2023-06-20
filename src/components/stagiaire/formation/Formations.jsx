@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, FormHelperText } from '@mui/material';
 import { styled } from '@mui/system';
 import Formation from './Formation';
 import { addFormation } from '../../../app/api/stagiaireAxios';
 import GetCookie from '../../../cookies/JWT/GetCookie';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const StyledButton = styled(Button)`
   margin-top: 1rem;
@@ -17,7 +18,11 @@ const Formations = ({ formations, userId }) => {
     institut: '',
     dateFin: ''
   });
-  console.log ("huuuuuuuuuuuuh" ,userId )
+  const [formErrors, setFormErrors] = useState({
+    titre: false,
+    institut: false,
+    dateFin: false
+  });
 
   const handleNewFormationChange = (event) => {
     const { name, value } = event.target;
@@ -30,6 +35,18 @@ const Formations = ({ formations, userId }) => {
   const handleAddFormation = async () => {
     try {
       const { titre, institut, dateFin } = newFormation;
+  
+      // Perform form validation
+      if (!titre || !institut || !dateFin) {
+        // Update formErrors state to indicate the fields with errors
+        setFormErrors({
+          titre: !titre,
+          institut: !institut,
+          dateFin: !dateFin
+        });
+        return; // Stop the submission if there are validation errors
+      }
+  
       const response = await addFormation(userId, {
         titre,
         institut,
@@ -37,26 +54,37 @@ const Formations = ({ formations, userId }) => {
       }, token);
   
       console.log('Formation added successfully:', response);
+  
+      setNewFormation({
+        titre: '',
+        institut: '',
+        dateFin: ''
+      });
+  
+      // If the response indicates successful submission, then close the form
+      if (response.success) {
+        setEditFormOpen(false);
+      }
     } catch (error) {
       console.log(error);
     }
-  
-    setNewFormation({
-      titre: '',
-      institut: '',
-      dateFin: ''
-    });
-    setEditFormOpen(false);
   };
   
 
   const handleNewFormationFormOpen = () => {
-    setNewFormation({
-      titre: '',
-      institut: '',
-      dateFin: ''
-    });
-    setEditFormOpen(true);
+    if (!editFormOpen) {
+      setNewFormation({
+        titre: '',
+        institut: '',
+        dateFin: ''
+      });
+      setFormErrors({
+        titre: false,
+        institut: false,
+        dateFin: false
+      });
+      setEditFormOpen(true);
+    }
   };
 
   const handleNewFormationFormClose = () => {
@@ -77,54 +105,76 @@ const Formations = ({ formations, userId }) => {
       )}
 
       <div className="add-formation-form">
-        {!editFormOpen ? (
-          <StyledButton variant="contained" onClick={handleNewFormationFormOpen}>
-            Ajouter une formation
-          </StyledButton>
-        ) : (
-          <Dialog open={editFormOpen} onClose={handleNewFormationFormClose} fullWidth maxWidth="sm">
-            <DialogTitle>Ajouter une formation</DialogTitle>
-            <DialogContent>
-              <form>
-                <TextField
-                  label="Titre"
-                  variant="outlined"
-                  fullWidth
-                  name="titre"
-                  value={newFormation.titre}
-                  onChange={handleNewFormationChange}
-                />
-                <TextField
-                  label="Institut"
-                  variant="outlined"
-                  fullWidth
-                  name="institut"
-                  value={newFormation.institut}
-                  onChange={handleNewFormationChange}
-                />
-                <TextField
-                  label="Date de fin"
-                  variant="outlined"
-                  fullWidth
-                  name="dateFin"
-                  type="date"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  value={newFormation.dateFin}
-                  onChange={handleNewFormationChange}
-                />
-                <DialogActions>
-                  <Button onClick={handleNewFormationFormClose}>Annuler</Button>
-                  <Button onClick={handleAddFormation} color="primary">
-                    Ajouter
-                  </Button>
-                </DialogActions>
-              </form>
-            </DialogContent>
-          </Dialog>
-        )}
+        <StyledButton variant="contained" startIcon={<AddCircleIcon />} onClick={handleNewFormationFormOpen}>
+          Ajouter une formation
+        </StyledButton>
       </div>
+
+      <Dialog open={editFormOpen} onClose={handleNewFormationFormClose} fullWidth maxWidth="sm">
+        <DialogTitle>Ajouter une formation</DialogTitle>
+        <DialogContent>
+          <form>
+            <TextField
+              label="Titre"
+              variant="outlined"
+              fullWidth
+              name="titre"
+              value={newFormation.titre}
+              onChange={handleNewFormationChange}
+              sx={{ mt: 2 }}
+              error={formErrors.titre} // Set error state based on formErrors
+            />
+            {formErrors.titre && (
+              <FormHelperText error>Titre is required</FormHelperText>
+            )}
+
+            <TextField
+              label="Institut"
+              variant="outlined"
+              fullWidth
+              name="institut"
+              value={newFormation.institut}
+              onChange={handleNewFormationChange}
+              sx={{ mt: 2 }}
+              error={formErrors.institut} // Set error state based on formErrors
+            />
+            {formErrors.institut && (
+              <FormHelperText error>Institut is required</FormHelperText>
+            )}
+
+            <TextField
+              label="Date de fin"
+              variant="outlined"
+              fullWidth
+              name="dateFin"
+              type="date"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              value={newFormation.dateFin}
+              onChange={handleNewFormationChange}
+              sx={{ mt: 2 }}
+              error={formErrors.dateFin} // Set error state based on formErrors
+            />
+            {formErrors.dateFin && (
+              <FormHelperText error>Date de fin is required</FormHelperText>
+            )}
+
+            <DialogActions>
+              <Button onClick={handleNewFormationFormClose}>Annuler</Button>
+              <Button
+                onClick={() => {
+                  handleAddFormation();
+                  handleNewFormationFormClose();
+                }}
+                color="primary"
+              >
+                Ajouter
+              </Button>
+            </DialogActions>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

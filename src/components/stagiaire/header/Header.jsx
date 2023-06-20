@@ -9,6 +9,8 @@ import {
   Add as AddIcon,
   PhotoCamera as PhotoCameraIcon,
 } from "@mui/icons-material";
+import { Snackbar } from "@mui/material";
+
 import {
   Button,
   Dialog,
@@ -61,6 +63,18 @@ const Header = (props) => {
   const [editFormOpen, setEditFormOpen] = useState(false);
   const [aproposDeMoi, setAproposDeMoi] = useState(props.header.propos);
   const [age, setAge] = useState(props.header.age);
+  const [refetch, setRefetch] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+
+
+  useEffect(() => {
+    if (refetch) {
+      // Perform the refetch here
+      setRefetch(false);
+    }
+  }, [refetch]);
+
   const [id, setId] = useState(props.header.id);
   // console.log(props.header.id);
   useEffect(() => {
@@ -110,38 +124,33 @@ const Header = (props) => {
     try {
       const id = props.header.id;
       const data = { propos: aproposDeMoi };
-
+  
       await Promise.all([
         updateCv(id, data, token),
         addPropos(id, data, token),
       ]);
-
-      console.log("CV updated successfully");
-      console.log("A propos de moi added successfully");
-
+  
       setAproposDeMoi(data.propos);
-      window.location.reload();
+      setRefetch(true);
+      setSnackbarMessage("CV mis à jour avec succès");
+      setSnackbarOpen(true);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
     setEditFormOpen(false);
   };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
+  
+  
 
   const header = props.header;
   return (
     <div>
       <div className="cover-bg p-3 p-lg-4 text-white">
         <div className="row">
-          <div className="col-lg-4 col-md-5">
-            <div className="avatar hover-effect bg-white shadow-sm p-1 position-relative">
-              <img
-                src={props.header.profile_picture || Profile}
-                width="200"
-                height="200"
-                alt="pic"
-              />
-            </div>
-          </div>
 
           <div className="col-lg-8 col-md-7 text-center text-md-start">
             <h2 className="h1 mt-2" data-aos="fade-left" data-aos-delay="0">
@@ -212,6 +221,8 @@ const Header = (props) => {
                       fullWidth
                       value={aproposDeMoi}
                       onChange={handleAproposDeMoiChange}
+                      sx={{ mt: 2 }}
+                      required
                     />
                     <DialogActions>
                       <Button onClick={handleEditFormClose}>Cancel</Button>
@@ -264,6 +275,15 @@ const Header = (props) => {
           </div>
         </div>
       </div>
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={handleSnackbarClose}
+        message={snackbarMessage}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      />
+
     </div>
   );
 };

@@ -73,7 +73,9 @@ const Stagiaire = () => {
       <hr className="d-print-none" />
       <Formations formations={stagiaireData.formations} userId={stagiaireData.id} />
       <hr className="d-print-none" />
-      <Interet interets={stagiaireData.interets} userId={stagiaireData.id} />
+      {stagiaireData.interets && (
+        <Interet interets={stagiaireData.interets} userId={stagiaireData.id} />
+      )}
       <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={open}

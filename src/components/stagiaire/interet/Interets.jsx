@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './interet.css';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 import { styled } from '@mui/system';
+import { updateInteret } from '../../../app/api/stagiaireAxios';
+import GetCookie from '../../../cookies/JWT/GetCookie';
 
 const StyledEditButton = styled(Button)`
   font-size: 16px;
@@ -16,6 +18,9 @@ const StyledEditButton = styled(Button)`
 const Interets = ({ interet }) => {
   const [editFormOpen, setEditFormOpen] = useState(false);
   const [libelle, setLibelle] = useState(interet ? interet.libelle : '');
+  const token = GetCookie('jwt');
+
+  console.log ("huuuuuuuuuuuuh" ,interet.id )
 
   const handleEditFormOpen = () => {
     setLibelle(interet ? interet.libelle : '');
@@ -32,6 +37,7 @@ const Interets = ({ interet }) => {
 
   const handleSaveInteret = async () => {
     try {
+      const updatedInteret = await updateInteret(interet.user_id, interet.id, { libelle }, token); // Call the updateInteret function
       // Update the interet value in the state or perform other necessary actions
       console.log('Interet updated successfully');
     } catch (error) {
@@ -39,6 +45,7 @@ const Interets = ({ interet }) => {
     }
     setEditFormOpen(false);
   };
+
 
   return (
     <div className="timeline-card timeline-card-danger card shadow-sm">
@@ -74,6 +81,8 @@ const Interets = ({ interet }) => {
               fullWidth
               value={libelle}
               onChange={handleLibelleChange}
+              sx={{ mt: 2 }}
+              required
             />
             <DialogActions>
               <Button onClick={handleEditFormClose}>Cancel</Button>

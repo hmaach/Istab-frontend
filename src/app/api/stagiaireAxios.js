@@ -180,7 +180,7 @@ export const updateFormation = async (id, formationId, request, token) => {
 export const addInteret = async (id, request, token) => {
   try {
     const headers = { Authorization: `Bearer ${token}` };
-    const response = await api.post(`/stagiaire/${id}/interets`, request, { headers });
+    const response = await api.post(`/interets/${id}`, request, { headers });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -191,7 +191,7 @@ export const addInteret = async (id, request, token) => {
 export const updateInteret = async (id, interetId, request, token) => {
   try {
     const headers = { Authorization: `Bearer ${token}` };
-    const response = await api.put(`/stagiaire/${id}/interets/${interetId}`, request, { headers });
+    const response = await api.put(`/interets/${id}/${interetId}`, request, { headers });
     return response.data;
   } catch (error) {
     console.log(error);
