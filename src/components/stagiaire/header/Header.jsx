@@ -10,11 +10,9 @@ import {
   PhotoCamera as PhotoCameraIcon,
 } from "@mui/icons-material";
 import { Snackbar } from "@mui/material";
-import { selectCurrentUser  } from "../../../features/auth/authSlice";
+import { selectCurrentUser } from "../../../features/auth/authSlice";
+import DownloadForOfflineIcon from "@mui/icons-material/DownloadForOffline";
 import { useSelector } from "react-redux";
-
-
-
 
 import {
   Button,
@@ -69,20 +67,14 @@ const Header = (props) => {
 
   const [editFormOpen, setEditFormOpen] = useState(false);
 
-
   const [aproposDeMoi, setAproposDeMoi] = useState(props.header.propos);
   const [age, setAge] = useState(props.header.age);
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
 
-  console.log('user_id', authId);
+  // console.log("user_id", authId);
   const user = useSelector(selectCurrentUser);
-
-
-
-
-
 
   const [id, setId] = useState(props.header.id);
   // console.log(props.header.id);
@@ -116,7 +108,10 @@ const Header = (props) => {
         const url = window.URL.createObjectURL(new Blob([response]));
         const link = document.createElement("a");
         link.href = url;
-        link.setAttribute("download", `${props.header.nom}_${props.header.prenom}.pdf`);
+        link.setAttribute(
+          "download",
+          `${props.header.nom}_${props.header.prenom}.pdf`
+        );
         document.body.appendChild(link);
         link.click();
       })
@@ -133,12 +128,12 @@ const Header = (props) => {
     try {
       const id = props.header.id;
       const data = { propos: aproposDeMoi };
-  
+
       await Promise.all([
         updateCv(id, data, token),
         addPropos(id, data, token),
       ]);
-  
+
       setAproposDeMoi(data.propos);
       setSnackbarMessage("CV mis à jour avec succès");
       setSnackbarOpen(true);
@@ -151,36 +146,47 @@ const Header = (props) => {
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
   };
-  
-  
 
   const header = props.header;
   return (
     <div>
       <div className="cover-bg p-3 p-lg-4 text-white">
         <div className="row">
-
           <div className="col-lg-8 col-md-7 text-center text-md-start">
             <h2 className="h1 mt-2" data-aos="fade-left" data-aos-delay="0">
               {header.nom} {header.prenom}
             </h2>
-            <p data-aos="fade-left" data-aos-delay="100">
+            <p
+              data-aos="fade-left"
+              data-aos-delay="100"
+              className="first-letter"
+            >
               {header.filiere}
             </p>
-            {header.id === user?.id && (
             <div
               className="d-print-none"
               data-aos="fade-left"
               data-aos-delay="200"
             >
               <Button
+                variant="outlined"
+                endIcon={<DownloadForOfflineIcon />}
+                sx={{
+                  backgroundColor: "white",
+                  "&:hover": {
+                    backgroundColor: "white",
+                  },
+                }}
                 onClick={() => handleDownload(props.header.id)}
-                className="btn btn-light text-dark shadow-sm mt-1 me-1"
               >
                 CV sous forme PDF
               </Button>
+              {/* <Button
+                  className="btn btn-light text-dark shadow-sm mt-1 me-1"
+                >
+                  CV sous forme PDF
+                </Button> */}
             </div>
-            )}
           </div>
         </div>
       </div>
@@ -190,7 +196,6 @@ const Header = (props) => {
             <div className="propos-de-moi-section mb-4">
               <h2 className="h3 mb-3">
                 Résumé
-
                 {header.propos && header.id === user?.id && (
                   <IconButton
                     aria-label="Edit"
@@ -199,18 +204,17 @@ const Header = (props) => {
                   >
                     <StyledEditIcon />
                   </IconButton>
-                )} 
+                )}
               </h2>
               {header.propos ? (
                 <p>{header.propos}</p>
               ) : (
-                
                 <div className="add-icon-container">
                   {header.id === user?.id && (
-                  <StyledAddIcon
-                    className="add-icon"
-                    onClick={handleEditFormOpen}
-                  />
+                    <StyledAddIcon
+                      className="add-icon"
+                      onClick={handleEditFormOpen}
+                    />
                   )}
                   <p className="add-text">Ce champ est vide</p>
                 </div>
@@ -289,8 +293,6 @@ const Header = (props) => {
           </div>
         </div>
       </div>
-
-
     </div>
   );
 };

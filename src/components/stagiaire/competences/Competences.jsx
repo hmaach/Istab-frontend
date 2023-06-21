@@ -90,6 +90,7 @@ const Competences = ({ header }) => {
       try {
         await updateCompetences(header.id, competenceId, { categorie, desc: description });
         console.log('Competence updated successfully');
+        window.location.reload();
       } catch (error) {
         console.log('Error updating competence:', error.message);
       }
@@ -99,7 +100,11 @@ const Competences = ({ header }) => {
 
   const addNewCompetence = async () => {
     try {
-      await addCompetences(header.id, { categorie, desc: description });
+      await addCompetences(header.id, { categorie, desc: description })
+      .then((data)=>{
+        console.log(data)
+      });
+      window.location.reload();
       console.log('Competence added successfully');
       
     } catch (error) {

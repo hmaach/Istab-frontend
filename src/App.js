@@ -95,7 +95,7 @@ const App = () => {
         pauseOnHover
         theme="light"
       />
-      <HeaderWrapper />
+      {/* <HeaderWrapper /> */}
       <NavBarWrapper />
       <Routes>
         <Route path="/" element={<Layout />}>
