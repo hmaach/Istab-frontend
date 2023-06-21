@@ -4,6 +4,9 @@ import { styled } from '@mui/system';
 import Experience from './Experience';
 import { addExperience } from '../../../app/api/stagiaireAxios';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { selectCurrentUser  } from "../../../features/auth/authSlice";
+import { useSelector } from "react-redux";
+
 
 const StyledButton = styled(Button)`
   margin-top: 1rem;
@@ -15,6 +18,7 @@ const Experiences = ({ experiences, userId }) => {
 
 
   const [editFormOpen, setEditFormOpen] = useState(false);
+  const user = useSelector(selectCurrentUser);
   const [newExperience, setNewExperience] = useState({
     titre: '',
     place: '',
@@ -75,19 +79,21 @@ const Experiences = ({ experiences, userId }) => {
   return (
     <div className="work-experience-section px-3 px-lg-4">
       <h2 className="h3 mb-4">Expériences professionnelles</h2>
-      {experiences ? (
-        <div className="timeline">
-          {experiences.map((experience) => (
-            <Experience experience={experience} key={experience.id} />
-          ))}
-        </div>
-      ) : (
-        <p>No experiences found.</p>
-      )}
+      {experiences && experiences.length > 0 ? (
+  <div className="timeline">
+    {experiences.map((experience) => (
+      <Experience experience={experience} key={experience.id} />
+    ))}
+  </div>
+) : (
+  <p className="add-text">Ce champ est vide</p>
+)}
       <div className="add-experience-form">
+
+      {userId=== user?.id && (
         <StyledButton variant="contained" startIcon={<AddCircleIcon />} onClick={handleNewExperienceFormOpen}>
           Ajouter une expérience
-        </StyledButton>
+        </StyledButton> )}
       </div>
       <Dialog open={editFormOpen} onClose={handleNewExperienceFormClose} fullWidth maxWidth="sm">
         <DialogTitle>Ajouter une expérience</DialogTitle>

@@ -10,6 +10,11 @@ import {
   PhotoCamera as PhotoCameraIcon,
 } from "@mui/icons-material";
 import { Snackbar } from "@mui/material";
+import { selectCurrentUser  } from "../../../features/auth/authSlice";
+import { useSelector } from "react-redux";
+
+
+
 
 import {
   Button,
@@ -60,20 +65,24 @@ const StyledPhotoCameraIcon = styled(PhotoCameraIcon)`
 `;
 
 const Header = (props) => {
+  const { authId } = props;
+
   const [editFormOpen, setEditFormOpen] = useState(false);
+
+
   const [aproposDeMoi, setAproposDeMoi] = useState(props.header.propos);
   const [age, setAge] = useState(props.header.age);
-  const [refetch, setRefetch] = useState(false);
+
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
 
+  console.log('user_id', authId);
+  const user = useSelector(selectCurrentUser);
 
-  useEffect(() => {
-    if (refetch) {
-      // Perform the refetch here
-      setRefetch(false);
-    }
-  }, [refetch]);
+
+
+
+
 
   const [id, setId] = useState(props.header.id);
   // console.log(props.header.id);
@@ -131,7 +140,6 @@ const Header = (props) => {
       ]);
   
       setAproposDeMoi(data.propos);
-      setRefetch(true);
       setSnackbarMessage("CV mis à jour avec succès");
       setSnackbarOpen(true);
     } catch (error) {
@@ -159,6 +167,7 @@ const Header = (props) => {
             <p data-aos="fade-left" data-aos-delay="100">
               {header.filiere}
             </p>
+            {header.id === user?.id && (
             <div
               className="d-print-none"
               data-aos="fade-left"
@@ -171,6 +180,7 @@ const Header = (props) => {
                 CV sous forme PDF
               </Button>
             </div>
+            )}
           </div>
         </div>
       </div>
@@ -179,8 +189,9 @@ const Header = (props) => {
           <div className="col-md-6">
             <div className="propos-de-moi-section mb-4">
               <h2 className="h3 mb-3">
-                A propos de moi
-                {header.propos && (
+                Résumé
+
+                {header.propos && header.id === user?.id && (
                   <IconButton
                     aria-label="Edit"
                     className="edit-icon"
@@ -188,16 +199,19 @@ const Header = (props) => {
                   >
                     <StyledEditIcon />
                   </IconButton>
-                )}
+                )} 
               </h2>
               {header.propos ? (
                 <p>{header.propos}</p>
               ) : (
+                
                 <div className="add-icon-container">
+                  {header.id === user?.id && (
                   <StyledAddIcon
                     className="add-icon"
                     onClick={handleEditFormOpen}
                   />
+                  )}
                   <p className="add-text">Ce champ est vide</p>
                 </div>
               )}
@@ -276,13 +290,6 @@ const Header = (props) => {
         </div>
       </div>
 
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={3000}
-        onClose={handleSnackbarClose}
-        message={snackbarMessage}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      />
 
     </div>
   );

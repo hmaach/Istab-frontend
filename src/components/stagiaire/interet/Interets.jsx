@@ -4,6 +4,8 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } 
 import { styled } from '@mui/system';
 import { updateInteret } from '../../../app/api/stagiaireAxios';
 import GetCookie from '../../../cookies/JWT/GetCookie';
+import { selectCurrentUser  } from "../../../features/auth/authSlice";
+import { useSelector } from "react-redux";
 
 const StyledEditButton = styled(Button)`
   font-size: 16px;
@@ -19,6 +21,7 @@ const Interets = ({ interet }) => {
   const [editFormOpen, setEditFormOpen] = useState(false);
   const [libelle, setLibelle] = useState(interet ? interet.libelle : '');
   const token = GetCookie('jwt');
+  const user = useSelector(selectCurrentUser);
 
   console.log ("huuuuuuuuuuuuh" ,interet.id )
 
@@ -52,18 +55,11 @@ const Interets = ({ interet }) => {
       <div className="card-body">
         <div className="h5 mb-1">
           {libelle}
-          {interet ? (
+          { interet.user_id === user?.id && (
             <StyledEditButton variant="text" onClick={handleEditFormOpen}>
               Modifier
             </StyledEditButton>
-          ) : (
-            <div>
-              <Button variant="text" onClick={handleEditFormOpen}>
-                Ajouter une intérêt
-              </Button>
-              <p className="add-text">Ce champ est vide</p>
-            </div>
-          )}
+          ) }
         </div>
       </div>
       <Dialog open={editFormOpen} onClose={handleEditFormClose} fullWidth maxWidth="sm">

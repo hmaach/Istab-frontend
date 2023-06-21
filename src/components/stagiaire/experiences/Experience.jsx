@@ -10,6 +10,8 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/system';
 import { updateExperience } from '../../../app/api/stagiaireAxios';
+import { selectCurrentUser  } from "../../../features/auth/authSlice";
+import { useSelector } from "react-redux";
 
 
 const StyledEditButton = styled(Button)`
@@ -29,11 +31,8 @@ const Experience = ({ experience }) => {
   const [dateDeb, setDateDeb] = useState(experience.dateDeb);
   const [dateFin, setDateFin] = useState(experience.dateFin);
   const [mission, setMission] = useState(experience.mission);
+  const user = useSelector(selectCurrentUser);
 
-  console.log('titre:', titre);
-  console.log('Mission:', mission);
-  console.log('Experience ID:', experience.id);
-  console.log('User ID:', experience.user_id);
 
 
   const handleEditFormOpen = () => {
@@ -97,9 +96,11 @@ const Experience = ({ experience }) => {
         <div className="experience-header">
           <div className="h5 experience-title">
             {titre}
+            {experience.user_id === user?.id && (
             <StyledEditButton variant="text" onClick={handleEditFormOpen}>
               Modifier
             </StyledEditButton>
+            )}
           </div>
           <div className="experience-place">{place}</div>
         </div>

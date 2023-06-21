@@ -5,6 +5,8 @@ import Formation from './Formation';
 import { addFormation } from '../../../app/api/stagiaireAxios';
 import GetCookie from '../../../cookies/JWT/GetCookie';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { selectCurrentUser  } from "../../../features/auth/authSlice";
+import { useSelector } from "react-redux";
 
 const StyledButton = styled(Button)`
   margin-top: 1rem;
@@ -13,6 +15,7 @@ const StyledButton = styled(Button)`
 const Formations = ({ formations, userId }) => {
   const [editFormOpen, setEditFormOpen] = useState(false);
   const token = GetCookie('jwt');
+  const user = useSelector(selectCurrentUser);
   const [newFormation, setNewFormation] = useState({
     titre: '',
     institut: '',
@@ -94,20 +97,21 @@ const Formations = ({ formations, userId }) => {
   return (
     <div className="formation-section px-3 px-lg-4">
       <h2 className="h3 mb-4">Formations</h2>
-      {formations ? (
+      {formations && formations.length > 0 ? (
         <div className="timeline">
           {formations.map((formation) => (
             <Formation formation={formation} key={formation.id} />
           ))}
         </div>
       ) : (
-        <p>No formations found.</p>
+        <p className="add-text">Ce champ est vide</p>
       )}
 
       <div className="add-formation-form">
+      {userId=== user?.id && (
         <StyledButton variant="contained" startIcon={<AddCircleIcon />} onClick={handleNewFormationFormOpen}>
           Ajouter une formation
-        </StyledButton>
+        </StyledButton>  )}
       </div>
 
       <Dialog open={editFormOpen} onClose={handleNewFormationFormClose} fullWidth maxWidth="sm">

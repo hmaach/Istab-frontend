@@ -71,7 +71,7 @@ const NavBar = () => {
           </NavLink>
         )}
         {user && (
-          <NavLink to="/profile" activeclassname="active" id="row">
+          <NavLink to="/Monprofile" activeclassname="active" id="row">
             <CgProfile id="home-icon" />
             <p className="bold" id="nav-title">
               Profile

@@ -114,10 +114,12 @@ const App = () => {
 
           <Route path='/c' element={<Calendar />} />
           <Route path='/profile/:id' element={<Stagiaire />} />
+          <Route path='/Monprofile' element={<Profile />} />
 
           {/* protected routes (require login) */}
           <Route element={<RequireAuth />}>
 
+            
           </Route>
 
           {/* admin routes */}
@@ -129,7 +131,7 @@ const App = () => {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           {/* <div className="app"> */}
-          {/* {isAdminRoute && <Sidebar isSidebar={isSidebar} />}
+      {/* {isAdminRoute && <Sidebar isSidebar={isSidebar} />}
 
           <main className={isAdminRoute ? "admin-content" : " content"}>
             {isAdminRoute && <Topbar setIsSidebar={setIsSidebar} />}
@@ -147,9 +149,9 @@ const App = () => {
               <Route path="/admin/geography" element={<Geography />} />
             </Routes>
           </main> */}
-          {/* </div> */}
-        {/* </ThemeProvider> */}
-      {/* </ColorModeContext.Provider> */} 
+      {/* </div> */}
+      {/* </ThemeProvider> */}
+      {/* </ColorModeContext.Provider> */}
     </div>
   );
 };

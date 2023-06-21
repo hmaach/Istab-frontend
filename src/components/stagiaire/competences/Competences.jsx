@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './competences.css';
 import { updateCompetences, addCompetences } from '../../../app/api/stagiaireAxios';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { selectCurrentUser  } from "../../../features/auth/authSlice";
+import { useSelector } from "react-redux";
 
 import { Edit as EditIcon, Add as AddIcon } from '@mui/icons-material';
 import {
@@ -45,6 +47,7 @@ const Competences = ({ header }) => {
   const [categorie, setCategorie] = useState('');
   const [description, setDescription] = useState('');
   const [competenceId, setCompetenceId] = useState(null);
+  const user = useSelector(selectCurrentUser);
 
   const handleEditFormOpen = (competence, index) => {
     setEditIndex(index);
@@ -98,6 +101,7 @@ const Competences = ({ header }) => {
     try {
       await addCompetences(header.id, { categorie, desc: description });
       console.log('Competence added successfully');
+      
     } catch (error) {
       console.log('Error adding competence:', error.message);
     }
@@ -179,30 +183,37 @@ const Competences = ({ header }) => {
                     ))}
                   </span>
                 )}
+                {header.id === user?.id && (
                 <StyledEditButton
                   variant="text"
                   onClick={() => handleEditFormOpen(competence, index)}
                 >
                   Modifier
-                </StyledEditButton>
+                </StyledEditButton> )}
               </div>
             </div>
           ))
         ) : (
+          
           <div className="col-md-12 d-flex justify-content-center align-items-center">
             <div className="mb-2 text-center">
+              <p className="add-text">Ce champ est vide</p>
+            {header.id === user?.id && (
               <StyledButton variant="contained" startIcon={<AddCircleIcon />} onClick={handleAddFormOpen}>
             Ajouter une compétence
           </StyledButton>
+            )}
             </div>
           </div>
         )}
         {competences && competences.length > 0 && (
           <div className="col-md-12 d-flex justify-content-center align-items-center">
             <div className="mb-2 text-center">
+              
+            {header.id === user?.id && (
             <StyledButton variant="contained" startIcon={<AddCircleIcon />} onClick={handleAddFormOpen}>
             Ajouter une compétence
-          </StyledButton>
+          </StyledButton> )}
             </div>
           </div>
         )}

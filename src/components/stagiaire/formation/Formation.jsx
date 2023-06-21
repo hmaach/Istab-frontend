@@ -11,6 +11,8 @@ import {
 import { styled } from '@mui/system';
 import GetCookie from '../../../cookies/JWT/GetCookie';
 import { updateFormation } from '../../../app/api/stagiaireAxios';
+import { selectCurrentUser  } from "../../../features/auth/authSlice";
+import { useSelector } from "react-redux";
 
 const StyledEditButton = styled(Button)`
   font-size: 16px;
@@ -28,8 +30,7 @@ const Formation = ({ formation }) => {
   const [institut, setInstitut] = useState(formation.institut);
   const [dateFin, setDateFin] = useState(formation.dateFin);
   const token = GetCookie('jwt');
-
-  console.log('User IDff:', formation.user_id);
+  const user = useSelector(selectCurrentUser);
 
   const handleEditFormOpen = () => {
     setTitre(formation.titre);
@@ -79,9 +80,11 @@ const Formation = ({ formation }) => {
       <div className="card-body">
         <div className="formation-header">
           <div className="h5 formation-title">{titre}
+          {formation.user_id === user?.id && (
             <StyledEditButton variant="text" onClick={handleEditFormOpen}>
               Modifier
-            </StyledEditButton></div>
+            </StyledEditButton>
+            )}</div>
           <div className="formation-institut">{institut}</div>
         </div>
         <div className="text-muted text-small mb-2">Depuis {dateFin}</div>
