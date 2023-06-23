@@ -13,6 +13,8 @@ import GetCookie from '../../../cookies/JWT/GetCookie';
 import { updateFormation } from '../../../app/api/stagiaireAxios';
 import { selectCurrentUser  } from "../../../features/auth/authSlice";
 import { useSelector } from "react-redux";
+import { toast } from 'react-toastify';
+
 
 const StyledEditButton = styled(Button)`
   font-size: 16px;
@@ -66,6 +68,7 @@ const Formation = ({ formation }) => {
 
       const response = await updateFormation(formation.user_id, formation.id, updatedFormation, token);
       console.log('Formation updated successfully', response);
+      toast.success("Formation mis à jour avec succès");
 
   
     } catch (error) {

@@ -4,7 +4,7 @@ import { updateCompetences, addCompetences } from '../../../app/api/stagiaireAxi
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { selectCurrentUser  } from "../../../features/auth/authSlice";
 import { useSelector } from "react-redux";
-
+import { toast } from 'react-toastify';
 import { Edit as EditIcon, Add as AddIcon } from '@mui/icons-material';
 import {
   Button,
@@ -89,9 +89,9 @@ const Competences = ({ header }) => {
       // Updating an existing competence
       try {
         await updateCompetences(header.id, competenceId, { categorie, desc: description });
-        console.log('Competence updated successfully');
+        toast.success("Compétence mis à jour avec succès");
       } catch (error) {
-        console.log('Error updating competence:', error.message);
+        toast.error("Une erreur s'est produite");
       }
     }
     setEditFormOpen(false);
@@ -101,6 +101,7 @@ const Competences = ({ header }) => {
     try {
       await addCompetences(header.id, { categorie, desc: description });
       console.log('Competence added successfully');
+      toast.success("Compétence ajoutée avec succès");
       
     } catch (error) {
       console.log('Error adding competence:', error.message);

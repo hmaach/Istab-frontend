@@ -7,6 +7,8 @@ import { addInteret } from '../../../app/api/stagiaireAxios';
 import GetCookie from '../../../cookies/JWT/GetCookie';
 import { selectCurrentUser  } from "../../../features/auth/authSlice";
 import { useSelector } from "react-redux";
+import { toast } from 'react-toastify';
+
 
 
 const StyledButton = styled(Button)`
@@ -30,6 +32,7 @@ const Interet = ({ interets, userId }) => {
 
       const response = await addInteret(id, request, token);
       console.log('Interet added successfully:', response);
+      toast.success("Interet ajoutée avec succès");
 
       setNewInteret('');
     } catch (error) {

@@ -9,7 +9,8 @@ import {
   Add as AddIcon,
   PhotoCamera as PhotoCameraIcon,
 } from "@mui/icons-material";
-import { Snackbar } from "@mui/material";
+import { toast } from 'react-toastify';
+
 import { selectCurrentUser  } from "../../../features/auth/authSlice";
 import { useSelector } from "react-redux";
 
@@ -76,7 +77,7 @@ const Header = (props) => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
 
-  console.log('user_id', authId);
+
   const user = useSelector(selectCurrentUser);
 
 
@@ -134,19 +135,24 @@ const Header = (props) => {
       const id = props.header.id;
       const data = { propos: aproposDeMoi };
   
-      await Promise.all([
-        updateCv(id, data, token),
-        addPropos(id, data, token),
-      ]);
+      if (id) {
+        // Update the profile if it already exists
+        await updateCv(id, data, token);
+      } else {
+        // Add a new profile if it doesn't exist
+        await addPropos(id, data, token);
+      }
   
       setAproposDeMoi(data.propos);
-      setSnackbarMessage("CV mis à jour avec succès");
-      setSnackbarOpen(true);
+      toast.success("CV mis à jour avec succès"); // Display success toast
     } catch (error) {
       console.error(error);
+      toast.error("Une erreur s'est produite"); // Display error toast
     }
     setEditFormOpen(false);
   };
+  
+
 
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
@@ -189,7 +195,7 @@ const Header = (props) => {
           <div className="col-md-6">
             <div className="propos-de-moi-section mb-4">
               <h2 className="h3 mb-3">
-                Résumé
+                Profil
 
                 {header.propos && header.id === user?.id && (
                   <IconButton
@@ -221,7 +227,7 @@ const Header = (props) => {
                 fullWidth
                 maxWidth="sm"
               >
-                <DialogTitle>Edit Interet</DialogTitle>
+                <DialogTitle>Edit Profil </DialogTitle>
                 <DialogContent>
                   <form
                     onSubmit={(e) => {
@@ -289,6 +295,7 @@ const Header = (props) => {
           </div>
         </div>
       </div>
+
 
 
     </div>

@@ -6,6 +6,7 @@ import { updateInteret } from '../../../app/api/stagiaireAxios';
 import GetCookie from '../../../cookies/JWT/GetCookie';
 import { selectCurrentUser  } from "../../../features/auth/authSlice";
 import { useSelector } from "react-redux";
+import { toast } from 'react-toastify';
 
 const StyledEditButton = styled(Button)`
   font-size: 16px;
@@ -23,7 +24,6 @@ const Interets = ({ interet }) => {
   const token = GetCookie('jwt');
   const user = useSelector(selectCurrentUser);
 
-  console.log ("huuuuuuuuuuuuh" ,interet.id )
 
   const handleEditFormOpen = () => {
     setLibelle(interet ? interet.libelle : '');
@@ -41,10 +41,11 @@ const Interets = ({ interet }) => {
   const handleSaveInteret = async () => {
     try {
       const updatedInteret = await updateInteret(interet.user_id, interet.id, { libelle }, token); // Call the updateInteret function
-      // Update the interet value in the state or perform other necessary actions
-      console.log('Interet updated successfully');
+
+      toast.success("Interet mis à jour avec succès");
     } catch (error) {
       console.log(error);
+      toast.error("Une erreur s'est produite");
     }
     setEditFormOpen(false);
   };

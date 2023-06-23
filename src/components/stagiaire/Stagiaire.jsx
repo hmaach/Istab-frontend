@@ -11,43 +11,52 @@ import { getCv } from '../../app/api/stagiaireAxios';
 import { useParams } from 'react-router-dom';
 import { Backdrop, CircularProgress } from '@mui/material';
 
-
 const Stagiaire = () => {
   const { id } = useParams();
   const [stagiaireData, setStagiaireData] = useState({});
   const [open, setOpen] = useState(true);
 
   useEffect(() => {
-    getCv(id)
-      .then((data) => {
-        const cvData = data.stagiaire.cv;
-        const birthDate = cvData ? new Date(cvData.dateNais) : null;
-        const now = new Date();
-        const age = birthDate ? now.getFullYear() - birthDate.getFullYear() : null;
+    const fetchData = () => {
+      getCv(id)
+        .then((data) => {
+          const cvData = data.stagiaire.cv;
+          const birthDate = cvData ? new Date(cvData.dateNais) : null;
+          const now = new Date();
+          const age = birthDate ? now.getFullYear() - birthDate.getFullYear() : null;
 
-        setStagiaireData({
-          id: data.stagiaire.id,
-          nom: data.stagiaire.nom,
-          prenom: data.stagiaire.prenom,
-          tel: data.stagiaire.tel,
-          email: data.stagiaire.email,
-          filiere: data.stagiaire.groupe.filiere.libelle,
-          groupe: data.stagiaire.groupe.libelle,
-          statut: data.stagiaire.statut,
-          interets: data.stagiaire.interets,
-          propos: cvData ? cvData.propos : '',
-          competences: data.stagiaire.competences,
-          formations: data.stagiaire.formations,
-          experiences: data.stagiaire.experiences,
-          
-          age: age,
+          setStagiaireData({
+            id: data.stagiaire.id,
+            nom: data.stagiaire.nom,
+            prenom: data.stagiaire.prenom,
+            tel: data.stagiaire.tel,
+            email: data.stagiaire.email,
+            filiere: data.stagiaire.groupe.filiere.libelle,
+            groupe: data.stagiaire.groupe.libelle,
+            statut: data.stagiaire.statut,
+            interets: data.stagiaire.interets,
+            propos: cvData ? cvData.propos : '',
+            competences: data.stagiaire.competences,
+            formations: data.stagiaire.formations,
+            experiences: data.stagiaire.experiences,
+            age: age,
+          });
+
+          setOpen(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setOpen(false);
         });
-        setOpen(false)
-      })
-      .catch((error) => {
-        console.log(error);
-        setOpen(false)
-      });
+    };
+
+    fetchData(); // Initial data fetch
+
+    const interval = setInterval(fetchData, 2000); // Fetch data every 5 seconds
+
+    return () => {
+      clearInterval(interval); // Clean up the interval on component unmount
+    };
   }, [id]);
 
   const handleAproposDeMoiChange = (newAproposDeMoi) => {
@@ -59,16 +68,12 @@ const Stagiaire = () => {
 
   return (
     <div className="cover shadow-lg bg-white" id="cv">
-      <Header
-        header={stagiaireData}
-        onAproposDeMoiChange={handleAproposDeMoiChange}
-      />
+      <Header header={stagiaireData} onAproposDeMoiChange={handleAproposDeMoiChange} />
 
       <hr className="d-print-none" />
       <Competences header={stagiaireData} />
       <hr className="d-print-none" />
       <Experiences experiences={stagiaireData.experiences} userId={stagiaireData.id} />
-
 
       <hr className="d-print-none" />
       <Formations formations={stagiaireData.formations} userId={stagiaireData.id} />

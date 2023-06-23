@@ -12,6 +12,8 @@ import { styled } from '@mui/system';
 import { updateExperience } from '../../../app/api/stagiaireAxios';
 import { selectCurrentUser  } from "../../../features/auth/authSlice";
 import { useSelector } from "react-redux";
+import { toast } from 'react-toastify';
+
 
 
 const StyledEditButton = styled(Button)`
@@ -77,11 +79,11 @@ const Experience = ({ experience }) => {
         dateFin,
         mission,
       };
-  
-      // Call the API function to update the experience
+
       await updateExperience(experience.user_id, experience.id, updatedExperience);
   
-      console.log('Experience updated successfully');
+
+      toast.success("Expérience mis à jour avec succès");
     } catch (error) {
       console.log(error);
     }

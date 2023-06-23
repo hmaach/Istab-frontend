@@ -7,6 +7,8 @@ import GetCookie from '../../../cookies/JWT/GetCookie';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { selectCurrentUser  } from "../../../features/auth/authSlice";
 import { useSelector } from "react-redux";
+import { toast } from 'react-toastify';
+
 
 const StyledButton = styled(Button)`
   margin-top: 1rem;
@@ -57,6 +59,7 @@ const Formations = ({ formations, userId }) => {
       }, token);
   
       console.log('Formation added successfully:', response);
+      toast.success("Formation ajoutée avec succès");
   
       setNewFormation({
         titre: '',

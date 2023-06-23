@@ -6,6 +6,7 @@ import { addExperience } from '../../../app/api/stagiaireAxios';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { selectCurrentUser  } from "../../../features/auth/authSlice";
 import { useSelector } from "react-redux";
+import { toast } from 'react-toastify';
 
 
 const StyledButton = styled(Button)`
@@ -47,6 +48,7 @@ const Experiences = ({ experiences, userId }) => {
       });
 
       console.log('Experience added successfully:', response);
+      toast.success("Expérience ajoutée avec succès");
     } catch (error) {
       console.log(error);
     }
