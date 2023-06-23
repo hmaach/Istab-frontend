@@ -202,7 +202,7 @@ const Header = (props) => {
           <div className="col-md-6">
             <div className="propos-de-moi-section mb-4">
               <h2 className="h3 mb-3">
-                Profil
+              À propos de moi
 
                 {header.propos && header.id === user?.id && (
                   <IconButton
@@ -266,7 +266,7 @@ const Header = (props) => {
               <div className="col-sm-4">
                 <div className="pb-1">Filière</div>
               </div>
-              <div className="col-sm-8">{header.filiere}</div>
+              <div className="col-sm-8 first-letter">{header.filiere}</div>
               <div className="col-sm-4">
                 <div className="pb-1">Statut</div>
               </div>

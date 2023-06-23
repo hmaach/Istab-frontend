@@ -111,22 +111,13 @@ const Experiences = ({ experiences, userId }) => {
               required
             />
             <TextField
-              label="Place"
-              variant="outlined"
-              fullWidth
-              name="place"
-              value={newExperience.place}
-              onChange={handleNewExperienceChange}
-              required
-            />
-            <TextField
               label="Date de début"
               variant="outlined"
               fullWidth
               name="dateDeb"
               type="date"
               InputLabelProps={{
-                shrink: true,
+               shrink: true,
               }}
               value={newExperience.dateDeb}
               onChange={handleNewExperienceChange}
