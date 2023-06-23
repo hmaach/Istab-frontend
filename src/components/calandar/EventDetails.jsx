@@ -288,7 +288,7 @@ const EventDetails = (props) => {
           top: "57px",
         }}
       >
-        {user.role === "admin" || user.id === event.user_id ? (
+        {user?.role === "admin" || user?.id === event.user_id ? (
           <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
             {isEventNotStarted && (
               <>
@@ -361,7 +361,7 @@ const EventDetails = (props) => {
                 )}
               </>
             )}
-            {(user.role === "admin" || user.id === event.user_id) && (
+            {(user?.role === "admin" || user?.id === event.user_id) && (
               <Tooltip title="Supprimer l'événement" arrow>
                 <IconButton
                   aria-label="delete"

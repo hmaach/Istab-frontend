@@ -99,7 +99,10 @@ const Competences = ({ header }) => {
 
   const addNewCompetence = async () => {
     try {
-      await addCompetences(header.id, { categorie, desc: description });
+      await addCompetences(header.id, { categorie, desc: description })
+      .then((data)=>{
+        console.log(data)
+      });
       console.log('Competence added successfully');
       toast.success("Compétence ajoutée avec succès");
       

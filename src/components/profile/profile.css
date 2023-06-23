@@ -9,7 +9,7 @@
 
 .card-media {
   position: relative;
-  background-color: #000;
+  background-color: var(--color-primary);
   height: 200px;
 }
 

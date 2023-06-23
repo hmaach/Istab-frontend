@@ -2,9 +2,14 @@ import api from "./baseURL";
 
 export const getEvents = async (token = null) => {
   try {
-    const headers = token ? { Authorization: `Bearer ${token}` } : {};
-    const response = await api.get("/events", { headers });
-    return response.data;
+    if (token) {
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+      const response = await api.get("/events", { headers });
+      return response.data;
+    } else {
+      const response = await api.get("/eventspublic");
+      return response.data;
+    }
   } catch (error) {
     console.log(error);
   }
@@ -23,7 +28,7 @@ export const showEvent = async (id, token = null) => {
 export const showEvents = async (ids, token = null) => {
   try {
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
-    const response = await api.get('/showevents', {
+    const response = await api.get("/showevents", {
       params: { ids },
       headers,
     });
@@ -76,7 +81,9 @@ export const cancelEvent = async (id, token) => {
 export const restoreEventColor = async (id, token) => {
   try {
     const headers = { Authorization: `Bearer ${token}` };
-    const response = await api.post(`/events/${id}/restore-color`, null, { headers });
+    const response = await api.post(`/events/${id}/restore-color`, null, {
+      headers,
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -88,8 +95,8 @@ export const deleteEvent = async (id, token) => {
     const headers = { Authorization: `Bearer ${token}` };
     const response = await api.delete(`/events/${id}`, {
       params: { id: id },
-      headers
-  });
+      headers,
+    });
     return response.data;
   } catch (error) {
     console.log(error);
