@@ -183,7 +183,7 @@ function DataTable({ data, isLoading, onUpdate, onDelete }) {
             <TableCell />
             <TableCell>Les categories</TableCell>
             <TableCell>Propriétaire</TableCell>
-            <TableCell>Date de mis a jour</TableCell>
+            <TableCell>Date de mise à jour</TableCell>
             <TableCell></TableCell>
           </TableRow>
         </TableHead>

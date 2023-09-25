@@ -21,7 +21,7 @@ input {
     font-size: 1rem;
 } */
 
-main {
+.login-main {
     width: 100%;
     min-height: 100vh;
     overflow: hidden;

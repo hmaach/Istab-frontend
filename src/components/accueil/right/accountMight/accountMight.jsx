@@ -36,7 +36,7 @@ const AccountMight = (props) => {
 
 
   return (
-    <Link to='/profile' id="box-account-might" key={stagiaire.id}>
+    <Link to={`/profile/${stagiaire.id}`} id="box-account-might" key={stagiaire.id}>
       <div id="container-might">
         <span id="user-boxh" style={{ display: 'flex' }}>
           {stagiaire.profile
@@ -45,13 +45,13 @@ const AccountMight = (props) => {
               src="ayadi.jpeg"
               alt="profile"
             />
-            : <Avatar id="personr" {...stringAvatar(`${stagiaire.prenom} ${stagiaire.nom}`)} />
+            : <Avatar id="personr" {...stringAvatar(`${stagiaire?.prenom} ${stagiaire?.nom}`)} />
           }
 
           <span className="four_stagiaires">
             {/* <p id="name"><span className='first-letter'>{prenom}</span> <span className='first-letter'>{nom}</span></p> */}
-            <p id="namer"><span className='first-letter'>{stagiaire.prenom}</span> <span className='first-letter'>{stagiaire.nom}</span></p>
-            <p id="idr" className='first-letter'>{stagiaire.groupe.libelle} | {stagiaire.groupe.filiere.libelle}</p>
+            <p id="namer"><span className='first-letter'>{stagiaire?.prenom}</span> <span className='first-letter'>{stagiaire?.nom}</span></p>
+            <p id="idr" className='first-letter'>{stagiaire?.groupe?.libelle} | {stagiaire?.groupe?.filiere?.libelle}</p>
           </span>
         </span>
       </div>

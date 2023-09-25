@@ -99,7 +99,7 @@ function Login() {
 
 
     return (
-        <main>
+        <main className='login-main'>
             <div className="box">
                 <div className="inner-box">
                     <div className="forms-wrap">
