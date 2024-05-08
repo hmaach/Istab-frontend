@@ -10,7 +10,16 @@
 .no-margin{
   margin: 0 !important;
 }
-
+#container{
+  color: var(--color-text) ;
+}
+.container-admin{
+  display: flex !important;
+  width: 99%
+}
+.admin-content{
+  width: 98%;
+}
 @media (min-width: 200px) and (max-width: 499px) {
   #container {
     width: 100%;
